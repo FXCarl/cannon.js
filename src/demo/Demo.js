@@ -435,14 +435,14 @@ CANNON.Demo = function(options){
         Detector.addGetWebGLMessage();
     }
 
-    var SHADOW_MAP_WIDTH = 512;
-    var SHADOW_MAP_HEIGHT = 512;
+    var SHADOW_MAP_WIDTH = 2048;
+    var SHADOW_MAP_HEIGHT = 2048;
     var MARGIN = 0;
     var SCREEN_WIDTH = window.innerWidth;
     var SCREEN_HEIGHT = window.innerHeight - 2 * MARGIN;
     var camera, controls, renderer;
     var container;
-    var NEAR = 5, FAR = 2000;
+    var NEAR = 0.5, FAR = 1000;
     var sceneHUD, cameraOrtho, hudMaterial;
 
     var mouseX = 0, mouseY = 0;
@@ -459,35 +459,36 @@ CANNON.Demo = function(options){
         document.body.appendChild( container );
 
         // Camera
-        camera = new THREE.PerspectiveCamera( 24, SCREEN_WIDTH / SCREEN_HEIGHT, NEAR, FAR );
+        camera = new THREE.PerspectiveCamera( 45, SCREEN_WIDTH / SCREEN_HEIGHT, NEAR, FAR );
 
         camera.up.set(0,0,1);
         camera.position.set(0,30,20);
 
         // SCENE
         scene = that.scene = new THREE.Scene();
-        scene.fog = new THREE.Fog( 0x222222, 1000, FAR );
+        scene.fog = new THREE.Fog( 0, 5, FAR );
 
         // LIGHTS
-        ambient = new THREE.AmbientLight( 0x222222 );
-        scene.add( ambient );
+        hemiLight = new THREE.HemisphereLight( 0xffffff, 0x222222, 0.3 );
+        hemiLight.position.set( 0, 0, 10 );
+        scene.add( hemiLight );
 
-        light = new THREE.SpotLight( 0xffffff );
+        light = new THREE.DirectionalLight( 0xffffff, 1 );
         light.position.set( 30, 30, 40 );
-        light.target.position.set( 0, 0, 0 );
 
         light.castShadow = true;
+        light.shadowCameraNear = 5;
+        light.shadowCameraFar = 500;//camera.far;
+        var d = 32;
+        light.shadow.camera.left = -d;
+        light.shadow.camera.right = d;
+        light.shadow.camera.top = d;
+        light.shadow.camera.bottom = -d;
 
-        light.shadowCameraNear = 10;
-        light.shadowCameraFar = 100;//camera.far;
-        light.shadowCameraFov = 30;
-
-        light.shadowMapBias = 0.0039;
+        light.shadowMapBias = 0.005;
         light.shadowMapDarkness = 0.5;
         light.shadowMapWidth = SHADOW_MAP_WIDTH;
         light.shadowMapHeight = SHADOW_MAP_HEIGHT;
-
-        //light.shadowCameraVisible = true;
 
         scene.add( light );
         scene.add( camera );
@@ -603,14 +604,6 @@ CANNON.Demo = function(options){
                 for(var i=0; i<visuals.length; i++){
                     if(bodies[i] instanceof CANNON.Particle)
                         visuals[i].scale.set(size,size,size);
-                }
-            });
-            rf.add(settings,'shadows').onChange(function(shadows){
-                if(shadows){
-                    renderer.shadowMapAutoUpdate = true;
-                } else {
-                    renderer.shadowMapAutoUpdate = false;
-                    renderer.clearTarget( light.shadowMap );
                 }
             });
             rf.add(settings,'aabbs');

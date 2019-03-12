@@ -614,18 +614,14 @@ RaycastVehicle.prototype.updateFriction = function(timeStep) {
 var calcRollingFriction_vel1 = new Vec3();
 var calcRollingFriction_vel2 = new Vec3();
 var calcRollingFriction_vel = new Vec3();
-
 function calcRollingFriction(body0, body1, frictionPosWorld, frictionDirectionWorld, maxImpulse) {
     var j1 = 0;
     var contactPosWorld = frictionPosWorld;
 
-    // var rel_pos1 = new Vec3();
-    // var rel_pos2 = new Vec3();
     var vel1 = calcRollingFriction_vel1;
     var vel2 = calcRollingFriction_vel2;
     var vel = calcRollingFriction_vel;
-    // contactPosWorld.vsub(body0.position, rel_pos1);
-    // contactPosWorld.vsub(body1.position, rel_pos2);
+
 
     body0.getVelocityAtWorldPoint(contactPosWorld, vel1);
     body1.getVelocityAtWorldPoint(contactPosWorld, vel2);
@@ -695,7 +691,7 @@ function resolveSingleBilateral(body1, pos1, body2, pos2, normal, impulse){
 
     var rel_vel = normal.dot(vel);
 
-    var contactDamping = 0.2;
+    var contactDamping = 1;
     var massTerm = 1 / (body1.invMass + body2.invMass);
     var impulse = - contactDamping * rel_vel * massTerm;
 
