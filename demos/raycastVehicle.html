@@ -158,13 +158,13 @@
             switch(event.keyCode){
 
             case 38: // forward
-                vehicle.applyEngineForce(up ? 0 : -maxForce, 2);
-                vehicle.applyEngineForce(up ? 0 : -maxForce, 3);
+                vehicle.applyEngineForce(up ? 0 : -maxForce, 0);
+                vehicle.applyEngineForce(up ? 0 : -maxForce, 1);
                 break;
 
             case 40: // backward
-                vehicle.applyEngineForce(up ? 0 : maxForce, 2);
-                vehicle.applyEngineForce(up ? 0 : maxForce, 3);
+                vehicle.applyEngineForce(up ? 0 : maxForce, 0);
+                vehicle.applyEngineForce(up ? 0 : maxForce, 1);
                 break;
 
             case 66: // b
