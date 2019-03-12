@@ -183,12 +183,12 @@ CANNON.Demo = function(options){
         case "solid":
             that.currentMaterial = solidMaterial;
             light.intensity = 1;
-            ambient.color.setHex(0x222222);
+            hemiLight.intensity = 0.3;
             break;
         case "wireframe":
             that.currentMaterial = wireframeMaterial;
             light.intensity = 0;
-            ambient.color.setHex(0xffffff);
+            hemiLight.intensity = 1;
             break;
         }
 
@@ -476,10 +476,10 @@ CANNON.Demo = function(options){
         light = new THREE.DirectionalLight( 0xffffff, 1 );
         light.position.set( 30, 30, 40 );
 
-        light.castShadow = true;
-        light.shadowCameraNear = 5;
-        light.shadowCameraFar = 500;//camera.far;
         var d = 32;
+        light.castShadow = true;
+        light.shadow.camera.near = 5;
+        light.shadow.camera.far = 500;//camera.far;
         light.shadow.camera.left = -d;
         light.shadow.camera.right = d;
         light.shadow.camera.top = d;
@@ -487,8 +487,8 @@ CANNON.Demo = function(options){
 
         light.shadowMapBias = 0.005;
         light.shadowMapDarkness = 0.5;
-        light.shadowMapWidth = SHADOW_MAP_WIDTH;
-        light.shadowMapHeight = SHADOW_MAP_HEIGHT;
+        light.shadow.mapSize.width = SHADOW_MAP_WIDTH;
+        light.shadow.mapSize.height = SHADOW_MAP_HEIGHT;
 
         scene.add( light );
         scene.add( camera );
@@ -515,7 +515,7 @@ CANNON.Demo = function(options){
         renderer.setClearColor( scene.fog.color, 1 );
         renderer.autoClear = false;
 
-        renderer.shadowMapEnabled = true;
+        renderer.shadowMap.enabled = true;
         renderer.shadowMapSoft = true;
 
         // Smoothie

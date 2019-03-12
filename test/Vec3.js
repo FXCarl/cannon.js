@@ -46,6 +46,20 @@ module.exports = {
         test.done();
     },
 
+    projection : function(test) {
+        test.expect(3);
+
+        var v = new Vec3(1, 1, 0);
+        var u = new Vec3(1, 0, 0);
+        var p = v.projection(u);
+
+        test.equal(p.x, 1, "Calculating projection x");
+        test.equal(p.y, 0, "Calculating projection y");
+        test.equal(p.z, 0, "Calculating projection z");
+
+        test.done();
+    },
+
     set : function(test) {
         test.expect(3);
 

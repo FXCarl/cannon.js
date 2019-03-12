@@ -326,6 +326,36 @@ Vec3.prototype.dot = function(v){
 };
 
 /**
+ * Calculate projection
+ * @method projection
+ * @param {Vec3} vector
+ * @param {Vec3} target The vector to save the result in.
+ * @return {Vec3}
+ */
+Vec3.prototype.projection = function(vector, target){
+    target = target || new Vec3();
+    var x = vector.x,
+        y = vector.y,
+        z = vector.z,
+        n = Math.sqrt(x*x + y*y + z*z);
+    if(n>0.0){
+        var invN = 1/n;
+        x *= invN;
+        y *= invN;
+        z *= invN;
+    } else {
+        x = 0;
+        y = 0;
+        z = 0;
+    }
+    n = this.x * x + this.y * y + this.z * z;
+    target.x = n * x;
+    target.y = n * y;
+    target.z = n * z;
+    return target;
+};
+
+/**
  * @method isZero
  * @return bool
  */

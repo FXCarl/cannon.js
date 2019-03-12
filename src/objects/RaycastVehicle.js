@@ -491,12 +491,14 @@ RaycastVehicle.prototype.updateFriction = function(timeStep) {
             surfNormalWS.cross(axlei, forwardWS[i]);
             forwardWS[i].normalize();
 
-            wheel.sideImpulse = resolveSingleBilateral(
+            wheel.sideImpulse = resolveSlipAngleBilateral(
                 chassisBody,
                 wheel.raycastResult.hitPointWorld,
                 groundObject,
                 wheel.raycastResult.hitPointWorld,
-                axlei
+                axlei,
+                forwardWS[i],
+                wheel
             );
 
             wheel.sideImpulse *= sideFrictionStiffness2;
@@ -504,7 +506,7 @@ RaycastVehicle.prototype.updateFriction = function(timeStep) {
     }
 
     var sideFactor = 1;
-    var fwdFactor = 0.5;
+    var fwdFactor = 1; // caculate each wheel standalone, so no need *0.5
 
     this.sliding = false;
     for (var i = 0; i < numWheels; i++) {
@@ -516,15 +518,12 @@ RaycastVehicle.prototype.updateFriction = function(timeStep) {
         wheel.slipInfo = 1;
         if (groundObject) {
             var defaultRollingFrictionImpulse = 0;
-            var maxImpulse = wheel.brake ? wheel.brake : defaultRollingFrictionImpulse;
-
-            // btWheelContactPoint contactPt(chassisBody,groundObject,wheelInfraycastInfo.hitPointWorld,forwardWS[wheel],maxImpulse);
-            // rollingFriction = calcRollingFriction(contactPt);
+            var maxImpulse = wheel.brake ? Math.min(wheel.brake, wheel.suspensionForce) : defaultRollingFrictionImpulse;
+            // braking part
             rollingFriction = calcRollingFriction(chassisBody, groundObject, wheel.raycastResult.hitPointWorld, forwardWS[i], maxImpulse);
-
+            // drive part
             rollingFriction += wheel.engineForce * timeStep;
 
-            // rollingFriction = 0;
             var factor = maxImpulse / rollingFriction;
             wheel.slipInfo *= factor;
         }
@@ -542,7 +541,7 @@ RaycastVehicle.prototype.updateFriction = function(timeStep) {
 
             var maximpSquared = maximp * maximpSide;
 
-            wheel.forwardImpulse = rollingFriction;//wheelInfo.engineForce* timeStep;
+            wheel.forwardImpulse = rollingFriction;
 
             var x = wheel.forwardImpulse * fwdFactor;
             var y = wheel.sideImpulse * sideFactor;
@@ -580,7 +579,6 @@ RaycastVehicle.prototype.updateFriction = function(timeStep) {
         var rel_pos = new Vec3();
         wheel.raycastResult.hitPointWorld.vsub(chassisBody.position, rel_pos);
         // cannons applyimpulse is using world coord for the position
-        //rel_pos.copy(wheel.raycastResult.hitPointWorld);
 
         if (wheel.forwardImpulse !== 0) {
             var impulse = new Vec3();
@@ -593,7 +591,6 @@ RaycastVehicle.prototype.updateFriction = function(timeStep) {
 
             var rel_pos2 = new Vec3();
             wheel.raycastResult.hitPointWorld.vsub(groundObject.position, rel_pos2);
-            //rel_pos2.copy(wheel.raycastResult.hitPointWorld);
             var sideImp = new Vec3();
             axle[i].scale(wheel.sideImpulse, sideImp);
 
@@ -669,7 +666,6 @@ function computeImpulseDenominator(body, pos, normal) {
 var resolveSingleBilateral_vel1 = new Vec3();
 var resolveSingleBilateral_vel2 = new Vec3();
 var resolveSingleBilateral_vel = new Vec3();
-
 //bilateral constraint between two dynamic objects
 function resolveSingleBilateral(body1, pos1, body2, pos2, normal, impulse){
     var normalLenSqr = normal.norm2();
@@ -693,6 +689,38 @@ function resolveSingleBilateral(body1, pos1, body2, pos2, normal, impulse){
 
     var contactDamping = 1;
     var massTerm = 1 / (body1.invMass + body2.invMass);
+    var impulse = - contactDamping * rel_vel * massTerm;
+
+    return impulse;
+}
+
+var resolveSlipAngleBilateral_vel1 = new Vec3();
+var resolveSlipAngleBilateral_vel2 = new Vec3();
+var resolveSlipAngleBilateral_vel = new Vec3();
+// Special for wheel slip
+function resolveSlipAngleBilateral(body1, pos1, body2, pos2, normal, tangent, wheelInfo){
+    var normalLenSqr = normal.norm2();
+    if (normalLenSqr > 1.1){
+        return 0; // no impulse
+    }
+
+    var vel1 = resolveSlipAngleBilateral_vel1;
+    var vel2 = resolveSlipAngleBilateral_vel2;
+    var vel = resolveSlipAngleBilateral_vel;
+    body1.getVelocityAtWorldPoint(pos1, vel1);
+    body2.getVelocityAtWorldPoint(pos2, vel2);
+    vel1.vsub(vel2, vel);
+
+    var rel_vel_coef = Math.abs(tangent.dot(vel));
+    var rel_vel = normal.dot(vel);
+    if(rel_vel_coef > 1.0){
+        rel_vel = rel_vel / rel_vel_coef; 
+    }
+
+    // body1 is chassis so change body1.invMass to wheelsuspensionforce*g(0.1)
+    var virtualMass = wheelInfo.suspensionForce * 0.1;
+    var contactDamping = 1;
+    var massTerm = 1 / (1 + body2.invMass) + Math.min(body1.mass, virtualMass);
     var impulse = - contactDamping * rel_vel * massTerm;
 
     return impulse;

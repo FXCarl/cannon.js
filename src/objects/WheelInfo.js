@@ -22,7 +22,7 @@ module.exports = WheelInfo;
  * @param {number} [options.suspensionStiffness=100]
  * @param {number} [options.dampingCompression=10]
  * @param {number} [options.dampingRelaxation=10]
- * @param {number} [options.frictionSlip=10000]
+ * @param {number} [options.frictionSlip=1]
  * @param {number} [options.steering=0]
  * @param {number} [options.rotation=0]
  * @param {number} [options.deltaRotation=0]
@@ -52,7 +52,7 @@ function WheelInfo(options){
         suspensionStiffness: 100,
         dampingCompression: 10,
         dampingRelaxation: 10,
-        frictionSlip: 10000,
+        frictionSlip: 1,
         steering: 0,
         rotation: 0,
         deltaRotation: 0,
