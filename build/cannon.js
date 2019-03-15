@@ -1,4 +1,4 @@
-// Tue, 12 Mar 2019 15:02:32 GMT
+// Wed, 13 Mar 2019 08:56:13 GMT
 
 /*
  * Copyright (c) 2015 cannon.js Authors
@@ -105,7 +105,7 @@ module.exports = {
     PointToPointConstraint :        _dereq_('./constraints/PointToPointConstraint'),
     Quaternion :                    _dereq_('./math/Quaternion'),
     Ray :                           _dereq_('./collision/Ray'),
-    RaycastVehicle :                _dereq_('./objects/RaycastVehicle'),
+    RaycastVehicle :                _dereq_('./vehicle/RaycastVehicle'),
     RaycastResult :                 _dereq_('./collision/RaycastResult'),
     RigidVehicle :                  _dereq_('./objects/RigidVehicle'),
     RotationalEquation :            _dereq_('./equations/RotationalEquation'),
@@ -124,7 +124,7 @@ module.exports = {
     World :                         _dereq_('./world/World'),
 };
 
-},{"../package.json":1,"./collision/AABB":3,"./collision/ArrayCollisionMatrix":4,"./collision/Broadphase":5,"./collision/GridBroadphase":6,"./collision/NaiveBroadphase":7,"./collision/ObjectCollisionMatrix":8,"./collision/Ray":10,"./collision/RaycastResult":11,"./collision/SAPBroadphase":12,"./constraints/ConeTwistConstraint":13,"./constraints/Constraint":14,"./constraints/DistanceConstraint":15,"./constraints/HingeConstraint":16,"./constraints/LockConstraint":17,"./constraints/PointToPointConstraint":18,"./equations/ContactEquation":20,"./equations/Equation":21,"./equations/FrictionEquation":22,"./equations/RotationalEquation":23,"./equations/RotationalMotorEquation":24,"./material/ContactMaterial":25,"./material/Material":26,"./math/Mat3":28,"./math/Quaternion":29,"./math/Transform":30,"./math/Vec3":31,"./objects/Body":32,"./objects/RaycastVehicle":33,"./objects/RigidVehicle":34,"./objects/SPHSystem":35,"./objects/Spring":36,"./shapes/Box":38,"./shapes/ConvexPolyhedron":39,"./shapes/Cylinder":40,"./shapes/Heightfield":41,"./shapes/Particle":42,"./shapes/Plane":43,"./shapes/Shape":44,"./shapes/Sphere":45,"./shapes/Trimesh":46,"./solver/GSSolver":47,"./solver/Solver":48,"./solver/SplitSolver":49,"./utils/EventTarget":50,"./utils/Pool":52,"./utils/Vec3Pool":55,"./world/Narrowphase":56,"./world/World":57}],3:[function(_dereq_,module,exports){
+},{"../package.json":1,"./collision/AABB":3,"./collision/ArrayCollisionMatrix":4,"./collision/Broadphase":5,"./collision/GridBroadphase":6,"./collision/NaiveBroadphase":7,"./collision/ObjectCollisionMatrix":8,"./collision/Ray":10,"./collision/RaycastResult":11,"./collision/SAPBroadphase":12,"./constraints/ConeTwistConstraint":13,"./constraints/Constraint":14,"./constraints/DistanceConstraint":15,"./constraints/HingeConstraint":16,"./constraints/LockConstraint":17,"./constraints/PointToPointConstraint":18,"./equations/ContactEquation":20,"./equations/Equation":21,"./equations/FrictionEquation":22,"./equations/RotationalEquation":23,"./equations/RotationalMotorEquation":24,"./material/ContactMaterial":25,"./material/Material":26,"./math/Mat3":28,"./math/Quaternion":29,"./math/Transform":30,"./math/Vec3":31,"./objects/Body":32,"./objects/RigidVehicle":33,"./objects/SPHSystem":34,"./objects/Spring":35,"./shapes/Box":36,"./shapes/ConvexPolyhedron":37,"./shapes/Cylinder":38,"./shapes/Heightfield":39,"./shapes/Particle":40,"./shapes/Plane":41,"./shapes/Shape":42,"./shapes/Sphere":43,"./shapes/Trimesh":44,"./solver/GSSolver":45,"./solver/Solver":46,"./solver/SplitSolver":47,"./utils/EventTarget":48,"./utils/Pool":50,"./utils/Vec3Pool":53,"./vehicle/RaycastVehicle":54,"./world/Narrowphase":56,"./world/World":57}],3:[function(_dereq_,module,exports){
 var Vec3 = _dereq_('../math/Vec3');
 var Utils = _dereq_('../utils/Utils');
 
@@ -447,7 +447,7 @@ AABB.prototype.overlapsRay = function(ray){
 
     return true;
 };
-},{"../math/Vec3":31,"../utils/Utils":54}],4:[function(_dereq_,module,exports){
+},{"../math/Vec3":31,"../utils/Utils":52}],4:[function(_dereq_,module,exports){
 module.exports = ArrayCollisionMatrix;
 
 /**
@@ -728,7 +728,7 @@ Broadphase.prototype.aabbQuery = function(world, aabb, result){
     console.warn('.aabbQuery is not implemented in this Broadphase subclass.');
     return [];
 };
-},{"../math/Quaternion":29,"../math/Vec3":31,"../objects/Body":32,"../shapes/Plane":43,"../shapes/Shape":44}],6:[function(_dereq_,module,exports){
+},{"../math/Quaternion":29,"../math/Vec3":31,"../objects/Body":32,"../shapes/Plane":41,"../shapes/Shape":42}],6:[function(_dereq_,module,exports){
 module.exports = GridBroadphase;
 
 var Broadphase = _dereq_('./Broadphase');
@@ -958,7 +958,7 @@ GridBroadphase.prototype.collisionPairs = function(world,pairs1,pairs2){
     this.makePairsUnique(pairs1,pairs2);
 };
 
-},{"../math/Vec3":31,"../shapes/Shape":44,"./Broadphase":5}],7:[function(_dereq_,module,exports){
+},{"../math/Vec3":31,"../shapes/Shape":42,"./Broadphase":5}],7:[function(_dereq_,module,exports){
 module.exports = NaiveBroadphase;
 
 var Broadphase = _dereq_('./Broadphase');
@@ -2028,7 +2028,7 @@ function distanceFromIntersection(from, direction, position) {
 }
 
 
-},{"../collision/AABB":3,"../collision/RaycastResult":11,"../math/Quaternion":29,"../math/Transform":30,"../math/Vec3":31,"../shapes/Box":38,"../shapes/ConvexPolyhedron":39,"../shapes/Shape":44}],11:[function(_dereq_,module,exports){
+},{"../collision/AABB":3,"../collision/RaycastResult":11,"../math/Quaternion":29,"../math/Transform":30,"../math/Vec3":31,"../shapes/Box":36,"../shapes/ConvexPolyhedron":37,"../shapes/Shape":42}],11:[function(_dereq_,module,exports){
 var Vec3 = _dereq_('../math/Vec3');
 
 module.exports = RaycastResult;
@@ -2475,7 +2475,7 @@ SAPBroadphase.prototype.aabbQuery = function(world, aabb, result){
 
     return result;
 };
-},{"../collision/Broadphase":5,"../shapes/Shape":44}],13:[function(_dereq_,module,exports){
+},{"../collision/Broadphase":5,"../shapes/Shape":42}],13:[function(_dereq_,module,exports){
 module.exports = ConeTwistConstraint;
 
 var Constraint = _dereq_('./Constraint');
@@ -2659,7 +2659,7 @@ Constraint.prototype.disable = function(){
 
 Constraint.idCounter = 0;
 
-},{"../utils/Utils":54}],15:[function(_dereq_,module,exports){
+},{"../utils/Utils":52}],15:[function(_dereq_,module,exports){
 module.exports = DistanceConstraint;
 
 var Constraint = _dereq_('./Constraint');
@@ -3804,7 +3804,7 @@ function ContactMaterial(m1, m2, options){
 
 ContactMaterial.idCounter = 0;
 
-},{"../utils/Utils":54}],26:[function(_dereq_,module,exports){
+},{"../utils/Utils":52}],26:[function(_dereq_,module,exports){
 module.exports = Material;
 
 /**
@@ -6361,735 +6361,7 @@ Body.prototype.integrate = function(dt, quatNormalize, quatNormalizeFast){
     this.updateInertiaWorld();
 };
 
-},{"../collision/AABB":3,"../material/Material":26,"../math/Mat3":28,"../math/Quaternion":29,"../math/Vec3":31,"../shapes/Box":38,"../shapes/Shape":44,"../utils/EventTarget":50}],33:[function(_dereq_,module,exports){
-var Body = _dereq_('./Body');
-var Vec3 = _dereq_('../math/Vec3');
-var Quaternion = _dereq_('../math/Quaternion');
-var RaycastResult = _dereq_('../collision/RaycastResult');
-var Ray = _dereq_('../collision/Ray');
-var WheelInfo = _dereq_('../objects/WheelInfo');
-
-module.exports = RaycastVehicle;
-
-/**
- * Vehicle helper class that casts rays from the wheel positions towards the ground and applies forces.
- * @class RaycastVehicle
- * @constructor
- * @param {object} [options]
- * @param {Body} [options.chassisBody] The car chassis body.
- * @param {integer} [options.indexRightAxis] Axis to use for right. x=0, y=1, z=2
- * @param {integer} [options.indexLeftAxis]
- * @param {integer} [options.indexUpAxis]
- */
-function RaycastVehicle(options){
-
-    /**
-     * @property {Body} chassisBody
-     */
-    this.chassisBody = options.chassisBody;
-
-    /**
-     * An array of WheelInfo objects.
-     * @property {array} wheelInfos
-     */
-    this.wheelInfos = [];
-
-    /**
-     * Will be set to true if the car is sliding.
-     * @property {boolean} sliding
-     */
-    this.sliding = false;
-
-    /**
-     * @property {World} world
-     */
-    this.world = null;
-
-    /**
-     * Index of the right axis, 0=x, 1=y, 2=z
-     * @property {integer} indexRightAxis
-     * @default 1
-     */
-    this.indexRightAxis = typeof(options.indexRightAxis) !== 'undefined' ? options.indexRightAxis : 1;
-
-    /**
-     * Index of the forward axis, 0=x, 1=y, 2=z
-     * @property {integer} indexForwardAxis
-     * @default 0
-     */
-    this.indexForwardAxis = typeof(options.indexForwardAxis) !== 'undefined' ? options.indexForwardAxis : 0;
-
-    /**
-     * Index of the up axis, 0=x, 1=y, 2=z
-     * @property {integer} indexUpAxis
-     * @default 2
-     */
-    this.indexUpAxis = typeof(options.indexUpAxis) !== 'undefined' ? options.indexUpAxis : 2;
-}
-
-var tmpVec1 = new Vec3();
-var tmpVec2 = new Vec3();
-var tmpVec3 = new Vec3();
-var tmpVec4 = new Vec3();
-var tmpVec5 = new Vec3();
-var tmpVec6 = new Vec3();
-var tmpRay = new Ray();
-
-/**
- * Add a wheel. For information about the options, see WheelInfo.
- * @method addWheel
- * @param {object} [options]
- */
-RaycastVehicle.prototype.addWheel = function(options){
-    options = options || {};
-
-    var info = new WheelInfo(options);
-    var index = this.wheelInfos.length;
-    this.wheelInfos.push(info);
-
-    return index;
-};
-
-/**
- * Set the steering value of a wheel.
- * @method setSteeringValue
- * @param {number} value
- * @param {integer} wheelIndex
- */
-RaycastVehicle.prototype.setSteeringValue = function(value, wheelIndex){
-    var wheel = this.wheelInfos[wheelIndex];
-    wheel.steering = value;
-};
-
-var torque = new Vec3();
-
-/**
- * Set the wheel force to apply on one of the wheels each time step
- * @method applyEngineForce
- * @param  {number} value
- * @param  {integer} wheelIndex
- */
-RaycastVehicle.prototype.applyEngineForce = function(value, wheelIndex){
-    this.wheelInfos[wheelIndex].engineForce = value;
-};
-
-/**
- * Set the braking force of a wheel
- * @method setBrake
- * @param {number} brake
- * @param {integer} wheelIndex
- */
-RaycastVehicle.prototype.setBrake = function(brake, wheelIndex){
-    this.wheelInfos[wheelIndex].brake = brake;
-};
-
-/**
- * Add the vehicle including its constraints to the world.
- * @method addToWorld
- * @param {World} world
- */
-RaycastVehicle.prototype.addToWorld = function(world){
-    var constraints = this.constraints;
-    world.addBody(this.chassisBody);
-    var that = this;
-    this.preStepCallback = function(){
-        that.updateVehicle(world.dt);
-    };
-    world.addEventListener('preStep', this.preStepCallback);
-    this.world = world;
-};
-
-/**
- * Get one of the wheel axles, world-oriented.
- * @private
- * @method getVehicleAxisWorld
- * @param  {integer} axisIndex
- * @param  {Vec3} result
- */
-RaycastVehicle.prototype.getVehicleAxisWorld = function(axisIndex, result){
-    result.set(
-        axisIndex === 0 ? 1 : 0,
-        axisIndex === 1 ? 1 : 0,
-        axisIndex === 2 ? 1 : 0
-    );
-    this.chassisBody.vectorToWorldFrame(result, result);
-};
-
-RaycastVehicle.prototype.updateVehicle = function(timeStep){
-    var wheelInfos = this.wheelInfos;
-    var numWheels = wheelInfos.length;
-    var chassisBody = this.chassisBody;
-
-    for (var i = 0; i < numWheels; i++) {
-        this.updateWheelTransform(i);
-    }
-
-    this.currentVehicleSpeedKmHour = 3.6 * chassisBody.velocity.norm();
-
-    var forwardWorld = new Vec3();
-    this.getVehicleAxisWorld(this.indexForwardAxis, forwardWorld);
-
-    if (forwardWorld.dot(chassisBody.velocity) < 0){
-        this.currentVehicleSpeedKmHour *= -1;
-    }
-
-    // simulate suspension
-    for (var i = 0; i < numWheels; i++) {
-        this.castRay(wheelInfos[i]);
-    }
-
-    this.updateSuspension(timeStep);
-
-    var impulse = new Vec3();
-    var relpos = new Vec3();
-    for (var i = 0; i < numWheels; i++) {
-        //apply suspension force
-        var wheel = wheelInfos[i];
-        var suspensionForce = wheel.suspensionForce;
-        if (suspensionForce > wheel.maxSuspensionForce) {
-            suspensionForce = wheel.maxSuspensionForce;
-        }
-        wheel.raycastResult.hitNormalWorld.scale(suspensionForce * timeStep, impulse);
-
-        wheel.raycastResult.hitPointWorld.vsub(chassisBody.position, relpos);
-        chassisBody.applyImpulse(impulse, relpos);
-    }
-
-    this.updateFriction(timeStep);
-
-    var hitNormalWorldScaledWithProj = new Vec3();
-    var fwd  = new Vec3();
-    var vel = new Vec3();
-    for (i = 0; i < numWheels; i++) {
-        var wheel = wheelInfos[i];
-        //var relpos = new Vec3();
-        //wheel.chassisConnectionPointWorld.vsub(chassisBody.position, relpos);
-        chassisBody.getVelocityAtWorldPoint(wheel.chassisConnectionPointWorld, vel);
-
-        // Hack to get the rotation in the correct direction
-        var m = 1;
-        switch(this.indexUpAxis){
-        case 1:
-            m = -1;
-            break;
-        }
-
-        if (wheel.isInContact) {
-
-            this.getVehicleAxisWorld(this.indexForwardAxis, fwd);
-            var proj = fwd.dot(wheel.raycastResult.hitNormalWorld);
-            wheel.raycastResult.hitNormalWorld.scale(proj, hitNormalWorldScaledWithProj);
-
-            fwd.vsub(hitNormalWorldScaledWithProj, fwd);
-
-            var proj2 = fwd.dot(vel);
-            wheel.deltaRotation = m * proj2 * timeStep / wheel.radius;
-        }
-
-        if((wheel.sliding || !wheel.isInContact) && wheel.engineForce !== 0 && wheel.useCustomSlidingRotationalSpeed){
-            // Apply custom rotation when accelerating and sliding
-            wheel.deltaRotation = (wheel.engineForce > 0 ? 1 : -1) * wheel.customSlidingRotationalSpeed * timeStep;
-        }
-
-        // Lock wheels
-        if(Math.abs(wheel.brake) > Math.abs(wheel.engineForce)){
-            wheel.deltaRotation = 0;
-        }
-
-        wheel.rotation += wheel.deltaRotation; // Use the old value
-        wheel.deltaRotation *= 0.99; // damping of rotation when not in contact
-    }
-};
-
-RaycastVehicle.prototype.updateSuspension = function(deltaTime) {
-    var chassisBody = this.chassisBody;
-    var chassisMass = chassisBody.mass;
-    var wheelInfos = this.wheelInfos;
-    var numWheels = wheelInfos.length;
-
-    for (var w_it = 0; w_it < numWheels; w_it++){
-        var wheel = wheelInfos[w_it];
-
-        if (wheel.isInContact){
-            var force;
-
-            // Spring
-            var susp_length = wheel.suspensionRestLength;
-            var current_length = wheel.suspensionLength;
-            var length_diff = (susp_length - current_length);
-
-            force = wheel.suspensionStiffness * length_diff * wheel.clippedInvContactDotSuspension;
-
-            // Damper
-            var projected_rel_vel = wheel.suspensionRelativeVelocity;
-            var susp_damping;
-            if (projected_rel_vel < 0) {
-                susp_damping = wheel.dampingCompression;
-            } else {
-                susp_damping = wheel.dampingRelaxation;
-            }
-            force -= susp_damping * projected_rel_vel;
-
-            wheel.suspensionForce = force * chassisMass;
-            if (wheel.suspensionForce < 0) {
-                wheel.suspensionForce = 0;
-            }
-        } else {
-            wheel.suspensionForce = 0;
-        }
-    }
-};
-
-/**
- * Remove the vehicle including its constraints from the world.
- * @method removeFromWorld
- * @param {World} world
- */
-RaycastVehicle.prototype.removeFromWorld = function(world){
-    var constraints = this.constraints;
-    world.remove(this.chassisBody);
-    world.removeEventListener('preStep', this.preStepCallback);
-    this.world = null;
-};
-
-var castRay_rayvector = new Vec3();
-var castRay_target = new Vec3();
-RaycastVehicle.prototype.castRay = function(wheel) {
-    var rayvector = castRay_rayvector;
-    var target = castRay_target;
-
-    this.updateWheelTransformWorld(wheel);
-    var chassisBody = this.chassisBody;
-
-    var depth = -1;
-
-    var raylen = wheel.suspensionRestLength + wheel.radius;
-
-    wheel.directionWorld.scale(raylen, rayvector);
-    var source = wheel.chassisConnectionPointWorld;
-    source.vadd(rayvector, target);
-    var raycastResult = wheel.raycastResult;
-
-    var param = 0;
-
-    raycastResult.reset();
-    // Turn off ray collision with the chassis temporarily
-    var oldState = chassisBody.collisionResponse;
-    chassisBody.collisionResponse = false;
-
-    // Cast ray against world
-    this.world.rayTest(source, target, raycastResult);
-    chassisBody.collisionResponse = oldState;
-
-    var object = raycastResult.body;
-
-    wheel.raycastResult.groundObject = 0;
-
-    if (object) {
-        depth = raycastResult.distance;
-        wheel.raycastResult.hitNormalWorld  = raycastResult.hitNormalWorld;
-        wheel.isInContact = true;
-
-        var hitDistance = raycastResult.distance;
-        wheel.suspensionLength = hitDistance - wheel.radius;
-
-        // clamp on max suspension travel
-        var minSuspensionLength = wheel.suspensionRestLength - wheel.maxSuspensionTravel;
-        var maxSuspensionLength = wheel.suspensionRestLength + wheel.maxSuspensionTravel;
-        if (wheel.suspensionLength < minSuspensionLength) {
-            wheel.suspensionLength = minSuspensionLength;
-        }
-        if (wheel.suspensionLength > maxSuspensionLength) {
-            wheel.suspensionLength = maxSuspensionLength;
-            wheel.raycastResult.reset();
-        }
-
-        var denominator = wheel.raycastResult.hitNormalWorld.dot(wheel.directionWorld);
-
-        var chassis_velocity_at_contactPoint = new Vec3();
-        chassisBody.getVelocityAtWorldPoint(wheel.raycastResult.hitPointWorld, chassis_velocity_at_contactPoint);
-
-        var projVel = wheel.raycastResult.hitNormalWorld.dot( chassis_velocity_at_contactPoint );
-
-        if (denominator >= -0.1) {
-            wheel.suspensionRelativeVelocity = 0;
-            wheel.clippedInvContactDotSuspension = 1 / 0.1;
-        } else {
-            var inv = -1 / denominator;
-            wheel.suspensionRelativeVelocity = projVel * inv;
-            wheel.clippedInvContactDotSuspension = inv;
-        }
-
-    } else {
-
-        //put wheel info as in rest position
-        wheel.suspensionLength = wheel.suspensionRestLength + 0 * wheel.maxSuspensionTravel;
-        wheel.suspensionRelativeVelocity = 0.0;
-        wheel.directionWorld.scale(-1, wheel.raycastResult.hitNormalWorld);
-        wheel.clippedInvContactDotSuspension = 1.0;
-    }
-
-    return depth;
-};
-
-RaycastVehicle.prototype.updateWheelTransformWorld = function(wheel){
-    wheel.isInContact = false;
-    var chassisBody = this.chassisBody;
-    chassisBody.pointToWorldFrame(wheel.chassisConnectionPointLocal, wheel.chassisConnectionPointWorld);
-    chassisBody.vectorToWorldFrame(wheel.directionLocal, wheel.directionWorld);
-    chassisBody.vectorToWorldFrame(wheel.axleLocal, wheel.axleWorld);
-};
-
-
-/**
- * Update one of the wheel transform.
- * Note when rendering wheels: during each step, wheel transforms are updated BEFORE the chassis; ie. their position becomes invalid after the step. Thus when you render wheels, you must update wheel transforms before rendering them. See raycastVehicle demo for an example.
- * @method updateWheelTransform
- * @param {integer} wheelIndex The wheel index to update.
- */
-RaycastVehicle.prototype.updateWheelTransform = function(wheelIndex){
-    var up = tmpVec4;
-    var right = tmpVec5;
-    var fwd = tmpVec6;
-
-    var wheel = this.wheelInfos[wheelIndex];
-    this.updateWheelTransformWorld(wheel);
-
-    wheel.directionLocal.scale(-1, up);
-    right.copy(wheel.axleLocal);
-    up.cross(right, fwd);
-    fwd.normalize();
-    right.normalize();
-
-    // Rotate around steering over the wheelAxle
-    var steering = wheel.steering;
-    var steeringOrn = new Quaternion();
-    steeringOrn.setFromAxisAngle(up, steering);
-
-    var rotatingOrn = new Quaternion();
-    rotatingOrn.setFromAxisAngle(right, wheel.rotation);
-
-    // World rotation of the wheel
-    var q = wheel.worldTransform.quaternion;
-    this.chassisBody.quaternion.mult(steeringOrn, q);
-    q.mult(rotatingOrn, q);
-
-    q.normalize();
-
-    // world position of the wheel
-    var p = wheel.worldTransform.position;
-    p.copy(wheel.directionWorld);
-    p.scale(wheel.suspensionLength, p);
-    p.vadd(wheel.chassisConnectionPointWorld, p);
-};
-
-var directions = [
-    new Vec3(1, 0, 0),
-    new Vec3(0, 1, 0),
-    new Vec3(0, 0, 1)
-];
-
-/**
- * Get the world transform of one of the wheels
- * @method getWheelTransformWorld
- * @param  {integer} wheelIndex
- * @return {Transform}
- */
-RaycastVehicle.prototype.getWheelTransformWorld = function(wheelIndex) {
-    return this.wheelInfos[wheelIndex].worldTransform;
-};
-
-
-var updateFriction_surfNormalWS_scaled_proj = new Vec3();
-var updateFriction_axle = [];
-var updateFriction_forwardWS = [];
-var sideFrictionStiffness2 = 1;
-RaycastVehicle.prototype.updateFriction = function(timeStep) {
-    var surfNormalWS_scaled_proj = updateFriction_surfNormalWS_scaled_proj;
-
-    //calculate the impulse, so that the wheels don't move sidewards
-    var wheelInfos = this.wheelInfos;
-    var numWheels = wheelInfos.length;
-    var chassisBody = this.chassisBody;
-    var forwardWS = updateFriction_forwardWS;
-    var axle = updateFriction_axle;
-
-    var numWheelsOnGround = 0;
-
-    for (var i = 0; i < numWheels; i++) {
-        var wheel = wheelInfos[i];
-
-        var groundObject = wheel.raycastResult.body;
-        if (groundObject){
-            numWheelsOnGround++;
-        }
-
-        wheel.sideImpulse = 0;
-        wheel.forwardImpulse = 0;
-        if(!forwardWS[i]){
-            forwardWS[i] = new Vec3();
-        }
-        if(!axle[i]){
-            axle[i] = new Vec3();
-        }
-    }
-
-    for (var i = 0; i < numWheels; i++){
-        var wheel = wheelInfos[i];
-
-        var groundObject = wheel.raycastResult.body;
-
-        if (groundObject) {
-            var axlei = axle[i];
-            var wheelTrans = this.getWheelTransformWorld(i);
-
-            // Get world axle
-            wheelTrans.vectorToWorldFrame(directions[this.indexRightAxis], axlei);
-
-            var surfNormalWS = wheel.raycastResult.hitNormalWorld;
-            var proj = axlei.dot(surfNormalWS);
-            surfNormalWS.scale(proj, surfNormalWS_scaled_proj);
-            axlei.vsub(surfNormalWS_scaled_proj, axlei);
-            axlei.normalize();
-
-            surfNormalWS.cross(axlei, forwardWS[i]);
-            forwardWS[i].normalize();
-
-            wheel.sideImpulse = resolveSlipAngleBilateral(
-                chassisBody,
-                wheel.raycastResult.hitPointWorld,
-                groundObject,
-                wheel.raycastResult.hitPointWorld,
-                axlei,
-                forwardWS[i],
-                wheel
-            );
-
-            wheel.sideImpulse *= sideFrictionStiffness2;
-        }
-    }
-
-    var sideFactor = 1;
-    var fwdFactor = 1; // caculate each wheel standalone, so no need *0.5
-
-    this.sliding = false;
-    for (var i = 0; i < numWheels; i++) {
-        var wheel = wheelInfos[i];
-        var groundObject = wheel.raycastResult.body;
-
-        var rollingFriction = 0;
-
-        wheel.slipInfo = 1;
-        if (groundObject) {
-            var defaultRollingFrictionImpulse = 0;
-            var maxImpulse = wheel.brake ? Math.min(wheel.brake, wheel.suspensionForce) : defaultRollingFrictionImpulse;
-            // braking part
-            rollingFriction = calcRollingFriction(chassisBody, groundObject, wheel.raycastResult.hitPointWorld, forwardWS[i], maxImpulse);
-            // drive part
-            rollingFriction += wheel.engineForce * timeStep;
-
-            var factor = maxImpulse / rollingFriction;
-            wheel.slipInfo *= factor;
-        }
-
-        //switch between active rolling (throttle), braking and non-active rolling friction (nthrottle/break)
-
-        wheel.forwardImpulse = 0;
-        wheel.skidInfo = 1;
-
-        if (groundObject) {
-            wheel.skidInfo = 1;
-
-            var maximp = wheel.suspensionForce * timeStep * wheel.frictionSlip;
-            var maximpSide = maximp;
-
-            var maximpSquared = maximp * maximpSide;
-
-            wheel.forwardImpulse = rollingFriction;
-
-            var x = wheel.forwardImpulse * fwdFactor;
-            var y = wheel.sideImpulse * sideFactor;
-
-            var impulseSquared = x * x + y * y;
-
-            wheel.sliding = false;
-            if (impulseSquared > maximpSquared) {
-                this.sliding = true;
-                wheel.sliding = true;
-
-                var factor = maximp / Math.sqrt(impulseSquared);
-
-                wheel.skidInfo *= factor;
-            }
-        }
-    }
-
-    if (this.sliding) {
-        for (var i = 0; i < numWheels; i++) {
-            var wheel = wheelInfos[i];
-            if (wheel.sideImpulse !== 0) {
-                if (wheel.skidInfo < 1){
-                    wheel.forwardImpulse *= wheel.skidInfo;
-                    wheel.sideImpulse *= wheel.skidInfo;
-                }
-            }
-        }
-    }
-
-    // apply the impulses
-    for (var i = 0; i < numWheels; i++) {
-        var wheel = wheelInfos[i];
-
-        var rel_pos = new Vec3();
-        wheel.raycastResult.hitPointWorld.vsub(chassisBody.position, rel_pos);
-        // cannons applyimpulse is using world coord for the position
-
-        if (wheel.forwardImpulse !== 0) {
-            var impulse = new Vec3();
-            forwardWS[i].scale(wheel.forwardImpulse, impulse);
-            chassisBody.applyImpulse(impulse, rel_pos);
-        }
-
-        if (wheel.sideImpulse !== 0){
-            var groundObject = wheel.raycastResult.body;
-
-            var rel_pos2 = new Vec3();
-            wheel.raycastResult.hitPointWorld.vsub(groundObject.position, rel_pos2);
-            var sideImp = new Vec3();
-            axle[i].scale(wheel.sideImpulse, sideImp);
-
-            // Scale the relative position in the up direction with rollInfluence.
-            // If rollInfluence is 1, the impulse will be applied on the hitPoint (easy to roll over), if it is zero it will be applied in the same plane as the center of mass (not easy to roll over).
-            chassisBody.vectorToLocalFrame(rel_pos, rel_pos);
-            rel_pos['xyz'[this.indexUpAxis]] *= wheel.rollInfluence;
-            chassisBody.vectorToWorldFrame(rel_pos, rel_pos);
-            chassisBody.applyImpulse(sideImp, rel_pos);
-
-            //apply friction impulse on the ground
-            sideImp.scale(-1, sideImp);
-            groundObject.applyImpulse(sideImp, rel_pos2);
-        }
-    }
-};
-
-var calcRollingFriction_vel1 = new Vec3();
-var calcRollingFriction_vel2 = new Vec3();
-var calcRollingFriction_vel = new Vec3();
-function calcRollingFriction(body0, body1, frictionPosWorld, frictionDirectionWorld, maxImpulse) {
-    var j1 = 0;
-    var contactPosWorld = frictionPosWorld;
-
-    var vel1 = calcRollingFriction_vel1;
-    var vel2 = calcRollingFriction_vel2;
-    var vel = calcRollingFriction_vel;
-
-
-    body0.getVelocityAtWorldPoint(contactPosWorld, vel1);
-    body1.getVelocityAtWorldPoint(contactPosWorld, vel2);
-    vel1.vsub(vel2, vel);
-
-    var vrel = frictionDirectionWorld.dot(vel);
-
-    var denom0 = computeImpulseDenominator(body0, frictionPosWorld, frictionDirectionWorld);
-    var denom1 = computeImpulseDenominator(body1, frictionPosWorld, frictionDirectionWorld);
-    var relaxation = 1;
-    var jacDiagABInv = relaxation / (denom0 + denom1);
-
-    // calculate j that moves us to zero relative velocity
-    j1 = -vrel * jacDiagABInv;
-
-    if (maxImpulse < j1) {
-        j1 = maxImpulse;
-    }
-    if (j1 < -maxImpulse) {
-        j1 = -maxImpulse;
-    }
-
-    return j1;
-}
-
-var computeImpulseDenominator_r0 = new Vec3();
-var computeImpulseDenominator_c0 = new Vec3();
-var computeImpulseDenominator_vec = new Vec3();
-var computeImpulseDenominator_m = new Vec3();
-function computeImpulseDenominator(body, pos, normal) {
-    var r0 = computeImpulseDenominator_r0;
-    var c0 = computeImpulseDenominator_c0;
-    var vec = computeImpulseDenominator_vec;
-    var m = computeImpulseDenominator_m;
-
-    pos.vsub(body.position, r0);
-    r0.cross(normal, c0);
-    body.invInertiaWorld.vmult(c0, m);
-    m.cross(r0, vec);
-
-    return body.invMass + normal.dot(vec);
-}
-
-
-var resolveSingleBilateral_vel1 = new Vec3();
-var resolveSingleBilateral_vel2 = new Vec3();
-var resolveSingleBilateral_vel = new Vec3();
-//bilateral constraint between two dynamic objects
-function resolveSingleBilateral(body1, pos1, body2, pos2, normal, impulse){
-    var normalLenSqr = normal.norm2();
-    if (normalLenSqr > 1.1){
-        return 0; // no impulse
-    }
-    // var rel_pos1 = new Vec3();
-    // var rel_pos2 = new Vec3();
-    // pos1.vsub(body1.position, rel_pos1);
-    // pos2.vsub(body2.position, rel_pos2);
-
-    var vel1 = resolveSingleBilateral_vel1;
-    var vel2 = resolveSingleBilateral_vel2;
-    var vel = resolveSingleBilateral_vel;
-    body1.getVelocityAtWorldPoint(pos1, vel1);
-    body2.getVelocityAtWorldPoint(pos2, vel2);
-
-    vel1.vsub(vel2, vel);
-
-    var rel_vel = normal.dot(vel);
-
-    var contactDamping = 1;
-    var massTerm = 1 / (body1.invMass + body2.invMass);
-    var impulse = - contactDamping * rel_vel * massTerm;
-
-    return impulse;
-}
-
-var resolveSlipAngleBilateral_vel1 = new Vec3();
-var resolveSlipAngleBilateral_vel2 = new Vec3();
-var resolveSlipAngleBilateral_vel = new Vec3();
-// Special for wheel slip
-function resolveSlipAngleBilateral(body1, pos1, body2, pos2, normal, tangent, wheelInfo){
-    var normalLenSqr = normal.norm2();
-    if (normalLenSqr > 1.1){
-        return 0; // no impulse
-    }
-
-    var vel1 = resolveSlipAngleBilateral_vel1;
-    var vel2 = resolveSlipAngleBilateral_vel2;
-    var vel = resolveSlipAngleBilateral_vel;
-    body1.getVelocityAtWorldPoint(pos1, vel1);
-    body2.getVelocityAtWorldPoint(pos2, vel2);
-    vel1.vsub(vel2, vel);
-
-    var rel_vel_coef = Math.abs(tangent.dot(vel));
-    var rel_vel = normal.dot(vel);
-    if(rel_vel_coef > 1.0){
-        rel_vel = rel_vel / rel_vel_coef; 
-    }
-
-    // body1 is chassis so change body1.invMass to wheelsuspensionforce*g(0.1)
-    var virtualMass = wheelInfo.suspensionForce * 0.1;
-    var contactDamping = 1;
-    var massTerm = 1 / (1 + body2.invMass) + Math.min(body1.mass, virtualMass);
-    var impulse = - contactDamping * rel_vel * massTerm;
-
-    return impulse;
-}
-},{"../collision/Ray":10,"../collision/RaycastResult":11,"../math/Quaternion":29,"../math/Vec3":31,"../objects/WheelInfo":37,"./Body":32}],34:[function(_dereq_,module,exports){
+},{"../collision/AABB":3,"../material/Material":26,"../math/Mat3":28,"../math/Quaternion":29,"../math/Vec3":31,"../shapes/Box":36,"../shapes/Shape":42,"../utils/EventTarget":48}],33:[function(_dereq_,module,exports){
 var Body = _dereq_('./Body');
 var Sphere = _dereq_('../shapes/Sphere');
 var Box = _dereq_('../shapes/Box');
@@ -7311,7 +6583,7 @@ RigidVehicle.prototype.getWheelSpeed = function(wheelIndex){
     return w.dot(worldAxis);
 };
 
-},{"../constraints/HingeConstraint":16,"../math/Vec3":31,"../shapes/Box":38,"../shapes/Sphere":45,"./Body":32}],35:[function(_dereq_,module,exports){
+},{"../constraints/HingeConstraint":16,"../math/Vec3":31,"../shapes/Box":36,"../shapes/Sphere":43,"./Body":32}],34:[function(_dereq_,module,exports){
 module.exports = SPHSystem;
 
 var Shape = _dereq_('../shapes/Shape');
@@ -7526,7 +6798,7 @@ SPHSystem.prototype.nablaw = function(r){
     return nabla;
 };
 
-},{"../material/Material":26,"../math/Quaternion":29,"../math/Vec3":31,"../objects/Body":32,"../shapes/Particle":42,"../shapes/Shape":44}],36:[function(_dereq_,module,exports){
+},{"../material/Material":26,"../math/Quaternion":29,"../math/Vec3":31,"../objects/Body":32,"../shapes/Particle":40,"../shapes/Shape":42}],35:[function(_dereq_,module,exports){
 var Vec3 = _dereq_('../math/Vec3');
 
 module.exports = Spring;
@@ -7721,290 +6993,7 @@ Spring.prototype.applyForce = function(){
     bodyB.torque.vadd(rj_x_f,bodyB.torque);
 };
 
-},{"../math/Vec3":31}],37:[function(_dereq_,module,exports){
-var Vec3 = _dereq_('../math/Vec3');
-var Transform = _dereq_('../math/Transform');
-var RaycastResult = _dereq_('../collision/RaycastResult');
-var Utils = _dereq_('../utils/Utils');
-
-module.exports = WheelInfo;
-
-/**
- * @class WheelInfo
- * @constructor
- * @param {Object} [options]
- *
- * @param {Vec3} [options.chassisConnectionPointLocal]
- * @param {Vec3} [options.chassisConnectionPointWorld]
- * @param {Vec3} [options.directionLocal]
- * @param {Vec3} [options.directionWorld]
- * @param {Vec3} [options.axleLocal]
- * @param {Vec3} [options.axleWorld]
- * @param {number} [options.suspensionRestLength=1]
- * @param {number} [options.suspensionMaxLength=2]
- * @param {number} [options.radius=1]
- * @param {number} [options.suspensionStiffness=100]
- * @param {number} [options.dampingCompression=10]
- * @param {number} [options.dampingRelaxation=10]
- * @param {number} [options.frictionSlip=1]
- * @param {number} [options.steering=0]
- * @param {number} [options.rotation=0]
- * @param {number} [options.deltaRotation=0]
- * @param {number} [options.rollInfluence=0.01]
- * @param {number} [options.maxSuspensionForce]
- * @param {boolean} [options.isFrontWheel=true]
- * @param {number} [options.clippedInvContactDotSuspension=1]
- * @param {number} [options.suspensionRelativeVelocity=0]
- * @param {number} [options.suspensionForce=0]
- * @param {number} [options.skidInfo=0]
- * @param {number} [options.suspensionLength=0]
- * @param {number} [options.maxSuspensionTravel=1]
- * @param {boolean} [options.useCustomSlidingRotationalSpeed=false]
- * @param {number} [options.customSlidingRotationalSpeed=-0.1]
- */
-function WheelInfo(options){
-    options = Utils.defaults(options, {
-        chassisConnectionPointLocal: new Vec3(),
-        chassisConnectionPointWorld: new Vec3(),
-        directionLocal: new Vec3(),
-        directionWorld: new Vec3(),
-        axleLocal: new Vec3(),
-        axleWorld: new Vec3(),
-        suspensionRestLength: 1,
-        suspensionMaxLength: 2,
-        radius: 1,
-        suspensionStiffness: 100,
-        dampingCompression: 10,
-        dampingRelaxation: 10,
-        frictionSlip: 1,
-        steering: 0,
-        rotation: 0,
-        deltaRotation: 0,
-        rollInfluence: 0.01,
-        maxSuspensionForce: Number.MAX_VALUE,
-        isFrontWheel: true,
-        clippedInvContactDotSuspension: 1,
-        suspensionRelativeVelocity: 0,
-        suspensionForce: 0,
-        skidInfo: 0,
-        suspensionLength: 0,
-        maxSuspensionTravel: 1,
-        useCustomSlidingRotationalSpeed: false,
-        customSlidingRotationalSpeed: -0.1
-    });
-
-    /**
-     * Max travel distance of the suspension, in meters.
-     * @property {number} maxSuspensionTravel
-     */
-    this.maxSuspensionTravel = options.maxSuspensionTravel;
-
-    /**
-     * Speed to apply to the wheel rotation when the wheel is sliding.
-     * @property {number} customSlidingRotationalSpeed
-     */
-    this.customSlidingRotationalSpeed = options.customSlidingRotationalSpeed;
-
-    /**
-     * If the customSlidingRotationalSpeed should be used.
-     * @property {Boolean} useCustomSlidingRotationalSpeed
-     */
-    this.useCustomSlidingRotationalSpeed = options.useCustomSlidingRotationalSpeed;
-
-    /**
-     * @property {Boolean} sliding
-     */
-    this.sliding = false;
-
-    /**
-     * Connection point, defined locally in the chassis body frame.
-     * @property {Vec3} chassisConnectionPointLocal
-     */
-    this.chassisConnectionPointLocal = options.chassisConnectionPointLocal.clone();
-
-    /**
-     * @property {Vec3} chassisConnectionPointWorld
-     */
-    this.chassisConnectionPointWorld = options.chassisConnectionPointWorld.clone();
-
-    /**
-     * @property {Vec3} directionLocal
-     */
-    this.directionLocal = options.directionLocal.clone();
-
-    /**
-     * @property {Vec3} directionWorld
-     */
-    this.directionWorld = options.directionWorld.clone();
-
-    /**
-     * @property {Vec3} axleLocal
-     */
-    this.axleLocal = options.axleLocal.clone();
-
-    /**
-     * @property {Vec3} axleWorld
-     */
-    this.axleWorld = options.axleWorld.clone();
-
-    /**
-     * @property {number} suspensionRestLength
-     */
-    this.suspensionRestLength = options.suspensionRestLength;
-
-    /**
-     * @property {number} suspensionMaxLength
-     */
-    this.suspensionMaxLength = options.suspensionMaxLength;
-
-    /**
-     * @property {number} radius
-     */
-    this.radius = options.radius;
-
-    /**
-     * @property {number} suspensionStiffness
-     */
-    this.suspensionStiffness = options.suspensionStiffness;
-
-    /**
-     * @property {number} dampingCompression
-     */
-    this.dampingCompression = options.dampingCompression;
-
-    /**
-     * @property {number} dampingRelaxation
-     */
-    this.dampingRelaxation = options.dampingRelaxation;
-
-    /**
-     * @property {number} frictionSlip
-     */
-    this.frictionSlip = options.frictionSlip;
-
-    /**
-     * @property {number} steering
-     */
-    this.steering = 0;
-
-    /**
-     * Rotation value, in radians.
-     * @property {number} rotation
-     */
-    this.rotation = 0;
-
-    /**
-     * @property {number} deltaRotation
-     */
-    this.deltaRotation = 0;
-
-    /**
-     * @property {number} rollInfluence
-     */
-    this.rollInfluence = options.rollInfluence;
-
-    /**
-     * @property {number} maxSuspensionForce
-     */
-    this.maxSuspensionForce = options.maxSuspensionForce;
-
-    /**
-     * @property {number} engineForce
-     */
-    this.engineForce = 0;
-
-    /**
-     * @property {number} brake
-     */
-    this.brake = 0;
-
-    /**
-     * @property {number} isFrontWheel
-     */
-    this.isFrontWheel = options.isFrontWheel;
-
-    /**
-     * @property {number} clippedInvContactDotSuspension
-     */
-    this.clippedInvContactDotSuspension = 1;
-
-    /**
-     * @property {number} suspensionRelativeVelocity
-     */
-    this.suspensionRelativeVelocity = 0;
-
-    /**
-     * @property {number} suspensionForce
-     */
-    this.suspensionForce = 0;
-
-    /**
-     * @property {number} skidInfo
-     */
-    this.skidInfo = 0;
-
-    /**
-     * @property {number} suspensionLength
-     */
-    this.suspensionLength = 0;
-
-    /**
-     * @property {number} sideImpulse
-     */
-    this.sideImpulse = 0;
-
-    /**
-     * @property {number} forwardImpulse
-     */
-    this.forwardImpulse = 0;
-
-    /**
-     * The result from raycasting
-     * @property {RaycastResult} raycastResult
-     */
-    this.raycastResult = new RaycastResult();
-
-    /**
-     * Wheel world transform
-     * @property {Transform} worldTransform
-     */
-    this.worldTransform = new Transform();
-
-    /**
-     * @property {boolean} isInContact
-     */
-    this.isInContact = false;
-}
-
-var chassis_velocity_at_contactPoint = new Vec3();
-var relpos = new Vec3();
-var chassis_velocity_at_contactPoint = new Vec3();
-WheelInfo.prototype.updateWheel = function(chassis){
-    var raycastResult = this.raycastResult;
-
-    if (this.isInContact){
-        var project= raycastResult.hitNormalWorld.dot(raycastResult.directionWorld);
-        raycastResult.hitPointWorld.vsub(chassis.position, relpos);
-        chassis.getVelocityAtWorldPoint(relpos, chassis_velocity_at_contactPoint);
-        var projVel = raycastResult.hitNormalWorld.dot( chassis_velocity_at_contactPoint );
-        if (project >= -0.1) {
-            this.suspensionRelativeVelocity = 0.0;
-            this.clippedInvContactDotSuspension = 1.0 / 0.1;
-        } else {
-            var inv = -1 / project;
-            this.suspensionRelativeVelocity = projVel * inv;
-            this.clippedInvContactDotSuspension = inv;
-        }
-
-    } else {
-        // Not in contact : position wheel in a nice (rest length) position
-        raycastResult.suspensionLength = this.suspensionRestLength;
-        this.suspensionRelativeVelocity = 0.0;
-        raycastResult.directionWorld.scale(-1, raycastResult.hitNormalWorld);
-        this.clippedInvContactDotSuspension = 1.0;
-    }
-};
-},{"../collision/RaycastResult":11,"../math/Transform":30,"../math/Vec3":31,"../utils/Utils":54}],38:[function(_dereq_,module,exports){
+},{"../math/Vec3":31}],36:[function(_dereq_,module,exports){
 module.exports = Box;
 
 var Shape = _dereq_('./Shape');
@@ -8241,7 +7230,7 @@ Box.prototype.calculateWorldAABB = function(pos,quat,min,max){
     // });
 };
 
-},{"../math/Vec3":31,"./ConvexPolyhedron":39,"./Shape":44}],39:[function(_dereq_,module,exports){
+},{"../math/Vec3":31,"./ConvexPolyhedron":37,"./Shape":42}],37:[function(_dereq_,module,exports){
 module.exports = ConvexPolyhedron;
 
 var Shape = _dereq_('./Shape');
@@ -9169,7 +8158,7 @@ ConvexPolyhedron.project = function(hull, axis, pos, quat, result){
     result[1] = min;
 };
 
-},{"../math/Quaternion":29,"../math/Transform":30,"../math/Vec3":31,"./Shape":44}],40:[function(_dereq_,module,exports){
+},{"../math/Quaternion":29,"../math/Transform":30,"../math/Vec3":31,"./Shape":42}],38:[function(_dereq_,module,exports){
 module.exports = Cylinder;
 
 var Shape = _dereq_('./Shape');
@@ -9250,7 +8239,7 @@ function Cylinder( radiusTop, radiusBottom, height , numSegments ) {
 
 Cylinder.prototype = new ConvexPolyhedron();
 
-},{"../math/Quaternion":29,"../math/Vec3":31,"./ConvexPolyhedron":39,"./Shape":44}],41:[function(_dereq_,module,exports){
+},{"../math/Quaternion":29,"../math/Vec3":31,"./ConvexPolyhedron":37,"./Shape":42}],39:[function(_dereq_,module,exports){
 var Shape = _dereq_('./Shape');
 var ConvexPolyhedron = _dereq_('./ConvexPolyhedron');
 var Vec3 = _dereq_('../math/Vec3');
@@ -9936,7 +8925,7 @@ Heightfield.prototype.setHeightsFromImage = function(image, scale){
     this.updateMinValue();
     this.update();
 };
-},{"../math/Vec3":31,"../utils/Utils":54,"./ConvexPolyhedron":39,"./Shape":44}],42:[function(_dereq_,module,exports){
+},{"../math/Vec3":31,"../utils/Utils":52,"./ConvexPolyhedron":37,"./Shape":42}],40:[function(_dereq_,module,exports){
 module.exports = Particle;
 
 var Shape = _dereq_('./Shape');
@@ -9983,7 +8972,7 @@ Particle.prototype.calculateWorldAABB = function(pos,quat,min,max){
     max.copy(pos);
 };
 
-},{"../math/Vec3":31,"./Shape":44}],43:[function(_dereq_,module,exports){
+},{"../math/Vec3":31,"./Shape":42}],41:[function(_dereq_,module,exports){
 module.exports = Plane;
 
 var Shape = _dereq_('./Shape');
@@ -10047,7 +9036,7 @@ Plane.prototype.calculateWorldAABB = function(pos, quat, min, max){
 Plane.prototype.updateBoundingSphereRadius = function(){
     this.boundingSphereRadius = Number.MAX_VALUE;
 };
-},{"../math/Vec3":31,"./Shape":44}],44:[function(_dereq_,module,exports){
+},{"../math/Vec3":31,"./Shape":42}],42:[function(_dereq_,module,exports){
 module.exports = Shape;
 
 var Shape = _dereq_('./Shape');
@@ -10166,7 +9155,7 @@ Shape.types = {
 };
 
 
-},{"../material/Material":26,"../math/Quaternion":29,"../math/Vec3":31,"./Shape":44}],45:[function(_dereq_,module,exports){
+},{"../material/Material":26,"../math/Quaternion":29,"../math/Vec3":31,"./Shape":42}],43:[function(_dereq_,module,exports){
 module.exports = Sphere;
 
 var Shape = _dereq_('./Shape');
@@ -10226,7 +9215,7 @@ Sphere.prototype.calculateWorldAABB = function(pos,quat,min,max){
     }
 };
 
-},{"../math/Vec3":31,"./Shape":44}],46:[function(_dereq_,module,exports){
+},{"../math/Vec3":31,"./Shape":42}],44:[function(_dereq_,module,exports){
 module.exports = Trimesh;
 
 var Shape = _dereq_('./Shape');
@@ -10789,7 +9778,7 @@ Trimesh.createTorus = function (radius, tube, radialSegments, tubularSegments, a
     return new Trimesh(vertices, indices);
 };
 
-},{"../collision/AABB":3,"../math/Quaternion":29,"../math/Transform":30,"../math/Vec3":31,"../utils/Octree":51,"./Shape":44}],47:[function(_dereq_,module,exports){
+},{"../collision/AABB":3,"../math/Quaternion":29,"../math/Transform":30,"../math/Vec3":31,"../utils/Octree":49,"./Shape":42}],45:[function(_dereq_,module,exports){
 module.exports = GSSolver;
 
 var Vec3 = _dereq_('../math/Vec3');
@@ -10931,7 +9920,7 @@ GSSolver.prototype.solve = function(dt,world){
     return iter;
 };
 
-},{"../math/Quaternion":29,"../math/Vec3":31,"./Solver":48}],48:[function(_dereq_,module,exports){
+},{"../math/Quaternion":29,"../math/Vec3":31,"./Solver":46}],46:[function(_dereq_,module,exports){
 module.exports = Solver;
 
 /**
@@ -10992,7 +9981,7 @@ Solver.prototype.removeAllEquations = function(){
 };
 
 
-},{}],49:[function(_dereq_,module,exports){
+},{}],47:[function(_dereq_,module,exports){
 module.exports = SplitSolver;
 
 var Vec3 = _dereq_('../math/Vec3');
@@ -11147,7 +10136,7 @@ SplitSolver.prototype.solve = function(dt,world){
 function sortById(a, b){
     return b.id - a.id;
 }
-},{"../math/Quaternion":29,"../math/Vec3":31,"../objects/Body":32,"./Solver":48}],50:[function(_dereq_,module,exports){
+},{"../math/Quaternion":29,"../math/Vec3":31,"../objects/Body":32,"./Solver":46}],48:[function(_dereq_,module,exports){
 /**
  * Base class for objects that dispatches events.
  * @class EventTarget
@@ -11248,7 +10237,7 @@ EventTarget.prototype = {
     }
 };
 
-},{}],51:[function(_dereq_,module,exports){
+},{}],49:[function(_dereq_,module,exports){
 var AABB = _dereq_('../collision/AABB');
 var Vec3 = _dereq_('../math/Vec3');
 
@@ -11483,7 +10472,7 @@ OctreeNode.prototype.removeEmptyNodes = function() {
     }
 };
 
-},{"../collision/AABB":3,"../math/Vec3":31}],52:[function(_dereq_,module,exports){
+},{"../collision/AABB":3,"../math/Vec3":31}],50:[function(_dereq_,module,exports){
 module.exports = Pool;
 
 /**
@@ -11560,7 +10549,7 @@ Pool.prototype.resize = function (size) {
 };
 
 
-},{}],53:[function(_dereq_,module,exports){
+},{}],51:[function(_dereq_,module,exports){
 module.exports = TupleDictionary;
 
 /**
@@ -11627,7 +10616,7 @@ TupleDictionary.prototype.reset = function() {
     }
 };
 
-},{}],54:[function(_dereq_,module,exports){
+},{}],52:[function(_dereq_,module,exports){
 function Utils(){}
 
 module.exports = Utils;
@@ -11652,7 +10641,7 @@ Utils.defaults = function(options, defaults){
     return options;
 };
 
-},{}],55:[function(_dereq_,module,exports){
+},{}],53:[function(_dereq_,module,exports){
 module.exports = Vec3Pool;
 
 var Vec3 = _dereq_('../math/Vec3');
@@ -11678,7 +10667,1012 @@ Vec3Pool.prototype.constructObject = function(){
     return new Vec3();
 };
 
-},{"../math/Vec3":31,"./Pool":52}],56:[function(_dereq_,module,exports){
+},{"../math/Vec3":31,"./Pool":50}],54:[function(_dereq_,module,exports){
+var Body = _dereq_('../objects/Body');
+var Vec3 = _dereq_('../math/Vec3');
+var Quaternion = _dereq_('../math/Quaternion');
+var WheelInfo = _dereq_('../vehicle/WheelInfo');
+
+module.exports = RaycastVehicle;
+
+/**
+ * Vehicle helper class that casts rays from the wheel positions towards the ground and applies forces.
+ * @class RaycastVehicle
+ * @constructor
+ * @param {object} [options]
+ * @param {Body} [options.chassisBody] The car chassis body.
+ * @param {integer} [options.indexRightAxis] Axis to use for right. x=0, y=1, z=2
+ * @param {integer} [options.indexLeftAxis]
+ * @param {integer} [options.indexUpAxis]
+ */
+function RaycastVehicle(options){
+
+    /**
+     * @property {Body} chassisBody
+     */
+    this.chassisBody = options.chassisBody;
+
+    /**
+     * An array of WheelInfo objects.
+     * @property {array} wheelInfos
+     */
+    this.wheelInfos = [];
+
+    /**
+     * Will be set to true if the car is sliding.
+     * @property {boolean} sliding
+     */
+    this.sliding = false;
+
+    /**
+     * @property {World} world
+     */
+    this.world = null;
+
+    /**
+     * Index of the right axis, 0=x, 1=y, 2=z
+     * @property {integer} indexRightAxis
+     * @default 1
+     */
+    this.indexRightAxis = typeof(options.indexRightAxis) !== 'undefined' ? options.indexRightAxis : 1;
+
+    /**
+     * Index of the forward axis, 0=x, 1=y, 2=z
+     * @property {integer} indexForwardAxis
+     * @default 0
+     */
+    this.indexForwardAxis = typeof(options.indexForwardAxis) !== 'undefined' ? options.indexForwardAxis : 0;
+
+    /**
+     * Index of the up axis, 0=x, 1=y, 2=z
+     * @property {integer} indexUpAxis
+     * @default 2
+     */
+    this.indexUpAxis = typeof(options.indexUpAxis) !== 'undefined' ? options.indexUpAxis : 2;
+}
+
+var tmpVec1 = new Vec3();
+var tmpVec2 = new Vec3();
+var tmpVec3 = new Vec3();
+var tmpVec4 = new Vec3();
+var tmpVec5 = new Vec3();
+var tmpVec6 = new Vec3();
+
+/**
+ * Add a wheel. For information about the options, see WheelInfo.
+ * @method addWheel
+ * @param {object} [options]
+ */
+RaycastVehicle.prototype.addWheel = function(options){
+    options = options || {};
+
+    var info = new WheelInfo(options);
+    var index = this.wheelInfos.length;
+    this.wheelInfos.push(info);
+
+    return index;
+};
+
+/**
+ * Set the steering value of a wheel.
+ * @method setSteeringValue
+ * @param {number} value
+ * @param {integer} wheelIndex
+ */
+RaycastVehicle.prototype.setSteeringValue = function(value, wheelIndex){
+    var wheel = this.wheelInfos[wheelIndex];
+    wheel.steering = value;
+};
+
+/**
+ * Set the wheel force to apply on one of the wheels each time step
+ * @method applyEngineForce
+ * @param  {number} value
+ * @param  {integer} wheelIndex
+ */
+RaycastVehicle.prototype.applyEngineForce = function(value, wheelIndex){
+    this.wheelInfos[wheelIndex].engineForce = value;
+};
+
+/**
+ * Set the braking force of a wheel
+ * @method setBrake
+ * @param {number} brake
+ * @param {integer} wheelIndex
+ */
+RaycastVehicle.prototype.setBrake = function(brake, wheelIndex){
+    this.wheelInfos[wheelIndex].brake = brake;
+};
+
+/**
+ * Add the vehicle including its constraints to the world.
+ * @method addToWorld
+ * @param {World} world
+ */
+RaycastVehicle.prototype.addToWorld = function(world){
+    var constraints = this.constraints;
+    world.addBody(this.chassisBody);
+    var that = this;
+    this.preStepCallback = function(){
+        that.updateVehicle(world.dt);
+    };
+    world.addEventListener('preStep', this.preStepCallback);
+    this.world = world;
+};
+
+/**
+ * Get one of the wheel axles, world-oriented.
+ * @private
+ * @method getVehicleAxisWorld
+ * @param  {integer} axisIndex
+ * @param  {Vec3} result
+ */
+RaycastVehicle.prototype.getVehicleAxisWorld = function(axisIndex, result){
+    result.set(
+        axisIndex === 0 ? 1 : 0,
+        axisIndex === 1 ? 1 : 0,
+        axisIndex === 2 ? 1 : 0
+    );
+    this.chassisBody.vectorToWorldFrame(result, result);
+};
+
+RaycastVehicle.prototype.updateVehicle = function(timeStep){
+    var wheelInfos = this.wheelInfos;
+    var numWheels = wheelInfos.length;
+    var chassisBody = this.chassisBody;
+
+    for (var i = 0; i < numWheels; i++) {
+        this.updateWheelTransform(i);
+    }
+
+    this.currentVehicleSpeedKmHour = 3.6 * chassisBody.velocity.norm();
+
+    var forwardWorld = new Vec3();
+    this.getVehicleAxisWorld(this.indexForwardAxis, forwardWorld);
+
+    if (forwardWorld.dot(chassisBody.velocity) < 0){
+        this.currentVehicleSpeedKmHour *= -1;
+    }
+
+    // simulate suspension
+    for (var i = 0; i < numWheels; i++) {
+        this.castRay(wheelInfos[i]);
+    }
+
+    this.updateSuspension(timeStep);
+
+    var impulse = new Vec3();
+    var relpos = new Vec3();
+    for (var i = 0; i < numWheels; i++) {
+        //apply suspension force
+        var wheel = wheelInfos[i];
+        var suspensionForce = wheel.suspensionForce;
+        if (suspensionForce > wheel.maxSuspensionForce) {
+            suspensionForce = wheel.maxSuspensionForce;
+        }
+        wheel.raycastResult.hitNormalWorld.scale(suspensionForce * timeStep, impulse);
+
+        wheel.raycastResult.hitPointWorld.vsub(chassisBody.position, relpos);
+        chassisBody.applyImpulse(impulse, relpos);
+    }
+
+    this.updateFriction(timeStep);
+
+    var hitNormalWorldScaledWithProj = new Vec3();
+    var fwd  = new Vec3();
+    var vel = new Vec3();
+    for (i = 0; i < numWheels; i++) {
+        var wheel = wheelInfos[i];
+        //var relpos = new Vec3();
+        //wheel.chassisConnectionPointWorld.vsub(chassisBody.position, relpos);
+        chassisBody.getVelocityAtWorldPoint(wheel.chassisConnectionPointWorld, vel);
+
+        // Hack to get the rotation in the correct direction
+        var m = 1;
+        switch(this.indexUpAxis){
+        case 1:
+            m = -1;
+            break;
+        }
+
+        if (wheel.isInContact) {
+
+            this.getVehicleAxisWorld(this.indexForwardAxis, fwd);
+            var proj = fwd.dot(wheel.raycastResult.hitNormalWorld);
+            wheel.raycastResult.hitNormalWorld.scale(proj, hitNormalWorldScaledWithProj);
+
+            fwd.vsub(hitNormalWorldScaledWithProj, fwd);
+
+            var proj2 = fwd.dot(vel);
+            wheel.deltaRotation = m * proj2 * timeStep / wheel.radius;
+        }
+
+        if((wheel.sliding || !wheel.isInContact) && wheel.engineForce !== 0 && wheel.useCustomSlidingRotationalSpeed){
+            // Apply custom rotation when accelerating and sliding
+            wheel.deltaRotation = (wheel.engineForce > 0 ? 1 : -1) * wheel.customSlidingRotationalSpeed * timeStep;
+        }
+
+        // Lock wheels
+        if(Math.abs(wheel.brake) > Math.abs(wheel.engineForce)){
+            wheel.deltaRotation = 0;
+        }
+
+        wheel.rotation += wheel.deltaRotation; // Use the old value
+        wheel.deltaRotation *= 0.99; // damping of rotation when not in contact
+    }
+};
+
+RaycastVehicle.prototype.updateSuspension = function(deltaTime) {
+    var chassisBody = this.chassisBody;
+    var chassisMass = chassisBody.mass;
+    var wheelInfos = this.wheelInfos;
+    var numWheels = wheelInfos.length;
+
+    for (var w_it = 0; w_it < numWheels; w_it++){
+        var wheel = wheelInfos[w_it];
+
+        if (wheel.isInContact){
+            var force;
+
+            // Spring
+            var susp_length = wheel.suspensionRestLength;
+            var current_length = wheel.suspensionLength;
+            var length_diff = (susp_length - current_length);
+
+            force = wheel.suspensionStiffness * length_diff * wheel.clippedInvContactDotSuspension;
+
+            // Damper
+            var projected_rel_vel = wheel.suspensionRelativeVelocity;
+            var susp_damping;
+            if (projected_rel_vel < 0) {
+                susp_damping = wheel.dampingCompression;
+            } else {
+                susp_damping = wheel.dampingRelaxation;
+            }
+            force -= susp_damping * projected_rel_vel;
+
+            wheel.suspensionForce = force * chassisMass;
+            if (wheel.suspensionForce < 0) {
+                wheel.suspensionForce = 0;
+            }
+        } else {
+            wheel.suspensionForce = 0;
+        }
+    }
+};
+
+/**
+ * Remove the vehicle including its constraints from the world.
+ * @method removeFromWorld
+ * @param {World} world
+ */
+RaycastVehicle.prototype.removeFromWorld = function(world){
+    var constraints = this.constraints;
+    world.remove(this.chassisBody);
+    world.removeEventListener('preStep', this.preStepCallback);
+    this.world = null;
+};
+
+var castRay_rayvector = new Vec3();
+var castRay_target = new Vec3();
+RaycastVehicle.prototype.castRay = function(wheel) {
+    var rayvector = castRay_rayvector;
+    var target = castRay_target;
+
+    this.updateWheelTransformWorld(wheel);
+    var chassisBody = this.chassisBody;
+
+    var depth = -1;
+
+    var raylen = wheel.suspensionRestLength + wheel.radius;
+
+    wheel.directionWorld.scale(raylen, rayvector);
+    var source = wheel.chassisConnectionPointWorld;
+    source.vadd(rayvector, target);
+    var raycastResult = wheel.raycastResult;
+
+    raycastResult.reset();
+    // Turn off ray collision with the chassis temporarily
+    var oldState = chassisBody.collisionResponse;
+    chassisBody.collisionResponse = false;
+
+    // Cast ray against world
+    this.world.rayTest(source, target, raycastResult);
+    chassisBody.collisionResponse = oldState;
+
+    var object = raycastResult.body;
+
+    wheel.raycastResult.groundObject = 0;
+
+    if (object) {
+        depth = raycastResult.distance;
+        wheel.raycastResult.hitNormalWorld  = raycastResult.hitNormalWorld;
+        wheel.isInContact = true;
+
+        var hitDistance = raycastResult.distance;
+        wheel.suspensionLength = hitDistance - wheel.radius;
+
+        // clamp on max suspension travel
+        var minSuspensionLength = wheel.suspensionRestLength - wheel.maxSuspensionTravel;
+        var maxSuspensionLength = wheel.suspensionRestLength + wheel.maxSuspensionTravel;
+        if (wheel.suspensionLength < minSuspensionLength) {
+            wheel.suspensionLength = minSuspensionLength;
+        }
+        if (wheel.suspensionLength > maxSuspensionLength) {
+            wheel.suspensionLength = maxSuspensionLength;
+            wheel.raycastResult.reset();
+        }
+
+        var denominator = wheel.raycastResult.hitNormalWorld.dot(wheel.directionWorld);
+
+        var chassis_velocity_at_contactPoint = new Vec3();
+        chassisBody.getVelocityAtWorldPoint(wheel.raycastResult.hitPointWorld, chassis_velocity_at_contactPoint);
+
+        var projVel = wheel.raycastResult.hitNormalWorld.dot( chassis_velocity_at_contactPoint );
+
+        if (denominator >= -0.1) {
+            wheel.suspensionRelativeVelocity = 0;
+            wheel.clippedInvContactDotSuspension = 1 / 0.1;
+        } else {
+            var inv = -1 / denominator;
+            wheel.suspensionRelativeVelocity = projVel * inv;
+            wheel.clippedInvContactDotSuspension = inv;
+        }
+
+    } else {
+
+        //put wheel info as in rest position
+        wheel.suspensionLength = wheel.suspensionRestLength + 0 * wheel.maxSuspensionTravel;
+        wheel.suspensionRelativeVelocity = 0.0;
+        wheel.directionWorld.scale(-1, wheel.raycastResult.hitNormalWorld);
+        wheel.clippedInvContactDotSuspension = 1.0;
+    }
+
+    return depth;
+};
+
+RaycastVehicle.prototype.updateWheelTransformWorld = function(wheel){
+    wheel.isInContact = false;
+    var chassisBody = this.chassisBody;
+    chassisBody.pointToWorldFrame(wheel.chassisConnectionPointLocal, wheel.chassisConnectionPointWorld);
+    chassisBody.vectorToWorldFrame(wheel.directionLocal, wheel.directionWorld);
+    chassisBody.vectorToWorldFrame(wheel.axleLocal, wheel.axleWorld);
+};
+
+
+/**
+ * Update one of the wheel transform.
+ * Note when rendering wheels: during each step, wheel transforms are updated BEFORE the chassis; ie. their position becomes invalid after the step. Thus when you render wheels, you must update wheel transforms before rendering them. See raycastVehicle demo for an example.
+ * @method updateWheelTransform
+ * @param {integer} wheelIndex The wheel index to update.
+ */
+RaycastVehicle.prototype.updateWheelTransform = function(wheelIndex){
+    var up = tmpVec4;
+    var right = tmpVec5;
+    var fwd = tmpVec6;
+
+    var wheel = this.wheelInfos[wheelIndex];
+    this.updateWheelTransformWorld(wheel);
+
+    wheel.directionLocal.scale(-1, up);
+    right.copy(wheel.axleLocal);
+    up.cross(right, fwd);
+    fwd.normalize();
+    right.normalize();
+
+    // Rotate around steering over the wheelAxle
+    var steering = wheel.steering;
+    var steeringOrn = new Quaternion();
+    steeringOrn.setFromAxisAngle(up, steering);
+
+    var rotatingOrn = new Quaternion();
+    rotatingOrn.setFromAxisAngle(right, wheel.rotation);
+
+    // World rotation of the wheel
+    var q = wheel.worldTransform.quaternion;
+    this.chassisBody.quaternion.mult(steeringOrn, q);
+    q.mult(rotatingOrn, q);
+
+    q.normalize();
+
+    // world position of the wheel
+    var p = wheel.worldTransform.position;
+    p.copy(wheel.directionWorld);
+    p.scale(wheel.suspensionLength, p);
+    p.vadd(wheel.chassisConnectionPointWorld, p);
+};
+
+var directions = [
+    new Vec3(1, 0, 0),
+    new Vec3(0, 1, 0),
+    new Vec3(0, 0, 1)
+];
+
+/**
+ * Get the world transform of one of the wheels
+ * @method getWheelTransformWorld
+ * @param  {integer} wheelIndex
+ * @return {Transform}
+ */
+RaycastVehicle.prototype.getWheelTransformWorld = function(wheelIndex) {
+    return this.wheelInfos[wheelIndex].worldTransform;
+};
+
+
+var updateFriction_surfNormalWS_scaled_proj = new Vec3();
+var updateFriction_axle = [];
+var updateFriction_forwardWS = [];
+var sideFrictionStiffness2 = 1;
+RaycastVehicle.prototype.updateFriction = function(timeStep) {
+    var surfNormalWS_scaled_proj = updateFriction_surfNormalWS_scaled_proj;
+
+    //calculate the impulse, so that the wheels don't move sidewards
+    var wheelInfos = this.wheelInfos;
+    var numWheels = wheelInfos.length;
+    var chassisBody = this.chassisBody;
+    var forwardWS = updateFriction_forwardWS;
+    var axle = updateFriction_axle;
+
+    var numWheelsOnGround = 0;
+
+    for (var i = 0; i < numWheels; i++) {
+        var wheel = wheelInfos[i];
+
+        var groundObject = wheel.raycastResult.body;
+        if (groundObject){
+            numWheelsOnGround++;
+        }
+
+        wheel.sideImpulse = 0;
+        wheel.forwardImpulse = 0;
+        if(!forwardWS[i]){
+            forwardWS[i] = new Vec3();
+        }
+        if(!axle[i]){
+            axle[i] = new Vec3();
+        }
+    }
+
+    for (var i = 0; i < numWheels; i++){
+        var wheel = wheelInfos[i];
+
+        var groundObject = wheel.raycastResult.body;
+
+        if (groundObject) {
+            var axlei = axle[i];
+            var wheelTrans = this.getWheelTransformWorld(i);
+
+            // Get world axle
+            wheelTrans.vectorToWorldFrame(directions[this.indexRightAxis], axlei);
+
+            var surfNormalWS = wheel.raycastResult.hitNormalWorld;
+            var proj = axlei.dot(surfNormalWS);
+            surfNormalWS.scale(proj, surfNormalWS_scaled_proj);
+            axlei.vsub(surfNormalWS_scaled_proj, axlei);
+            axlei.normalize();
+
+            surfNormalWS.cross(axlei, forwardWS[i]);
+            forwardWS[i].normalize();
+
+            wheel.sideImpulse = resolveSlipAngleBilateral(
+                chassisBody,
+                wheel.raycastResult.hitPointWorld,
+                groundObject,
+                wheel.raycastResult.hitPointWorld,
+                axlei,
+                forwardWS[i],
+                wheel
+            );
+
+            wheel.sideImpulse *= sideFrictionStiffness2;
+        }
+    }
+
+    var sideFactor = 1;
+    var fwdFactor = 1; // caculate each wheel standalone, so no need *0.5
+
+    this.sliding = false;
+    for (var i = 0; i < numWheels; i++) {
+        var wheel = wheelInfos[i];
+        var groundObject = wheel.raycastResult.body;
+
+        var rollingFriction = 0;
+
+        wheel.slipInfo = 1;
+        if (groundObject) {
+            var defaultRollingFrictionImpulse = 0;
+            var maxImpulse = wheel.brake ? Math.min(wheel.brake, wheel.suspensionForce) : defaultRollingFrictionImpulse;
+            // braking part
+            rollingFriction = calcRollingFriction(chassisBody, groundObject, wheel.raycastResult.hitPointWorld, forwardWS[i], maxImpulse);
+            // drive part
+            rollingFriction += wheel.engineForce * timeStep;
+
+            var factor = maxImpulse / rollingFriction;
+            wheel.slipInfo *= factor;
+        }
+
+        //switch between active rolling (throttle), braking and non-active rolling friction (nthrottle/break)
+
+        wheel.forwardImpulse = 0;
+        wheel.skidInfo = 1;
+
+        if (groundObject) {
+            wheel.skidInfo = 1;
+
+            var maximp = wheel.suspensionForce * timeStep * wheel.frictionSlip;
+            var maximpSide = maximp;
+
+            var maximpSquared = maximp * maximpSide;
+
+            wheel.forwardImpulse = rollingFriction;
+
+            var x = wheel.forwardImpulse * fwdFactor;
+            var y = wheel.sideImpulse * sideFactor;
+
+            var impulseSquared = x * x + y * y;
+
+            wheel.sliding = false;
+            if (impulseSquared > maximpSquared) {
+                this.sliding = true;
+                wheel.sliding = true;
+
+                var factor = maximp / Math.sqrt(impulseSquared);
+
+                wheel.skidInfo *= factor;
+            }
+        }
+    }
+
+    if (this.sliding) {
+        for (var i = 0; i < numWheels; i++) {
+            var wheel = wheelInfos[i];
+            if (wheel.sideImpulse !== 0) {
+                if (wheel.skidInfo < 1){
+                    wheel.forwardImpulse *= wheel.skidInfo;
+                    wheel.sideImpulse *= wheel.skidInfo;
+                }
+            }
+        }
+    }
+
+    // apply the impulses
+    for (var i = 0; i < numWheels; i++) {
+        var wheel = wheelInfos[i];
+
+        var rel_pos = new Vec3();
+        wheel.raycastResult.hitPointWorld.vsub(chassisBody.position, rel_pos);
+        // cannons applyimpulse is using world coord for the position
+
+        if (wheel.forwardImpulse !== 0) {
+            var impulse = new Vec3();
+            forwardWS[i].scale(wheel.forwardImpulse, impulse);
+            chassisBody.applyImpulse(impulse, rel_pos);
+        }
+
+        if (wheel.sideImpulse !== 0){
+            var groundObject = wheel.raycastResult.body;
+
+            var rel_pos2 = new Vec3();
+            wheel.raycastResult.hitPointWorld.vsub(groundObject.position, rel_pos2);
+            var sideImp = new Vec3();
+            axle[i].scale(wheel.sideImpulse, sideImp);
+
+            // Scale the relative position in the up direction with rollInfluence.
+            // If rollInfluence is 1, the impulse will be applied on the hitPoint (easy to roll over), if it is zero it will be applied in the same plane as the center of mass (not easy to roll over).
+            chassisBody.vectorToLocalFrame(rel_pos, rel_pos);
+            rel_pos['xyz'[this.indexUpAxis]] *= wheel.rollInfluence;
+            chassisBody.vectorToWorldFrame(rel_pos, rel_pos);
+            chassisBody.applyImpulse(sideImp, rel_pos);
+
+            //apply friction impulse on the ground
+            sideImp.scale(-1, sideImp);
+            groundObject.applyImpulse(sideImp, rel_pos2);
+        }
+    }
+};
+
+var calcRollingFriction_vel1 = new Vec3();
+var calcRollingFriction_vel2 = new Vec3();
+var calcRollingFriction_vel = new Vec3();
+function calcRollingFriction(body0, body1, frictionPosWorld, frictionDirectionWorld, maxImpulse) {
+    var j1 = 0;
+    var contactPosWorld = frictionPosWorld;
+
+    var vel1 = calcRollingFriction_vel1;
+    var vel2 = calcRollingFriction_vel2;
+    var vel = calcRollingFriction_vel;
+
+
+    body0.getVelocityAtWorldPoint(contactPosWorld, vel1);
+    body1.getVelocityAtWorldPoint(contactPosWorld, vel2);
+    vel1.vsub(vel2, vel);
+
+    var vrel = frictionDirectionWorld.dot(vel);
+
+    var denom0 = computeImpulseDenominator(body0, frictionPosWorld, frictionDirectionWorld);
+    var denom1 = computeImpulseDenominator(body1, frictionPosWorld, frictionDirectionWorld);
+    var relaxation = 1;
+    var jacDiagABInv = relaxation / (denom0 + denom1);
+
+    // calculate j that moves us to zero relative velocity
+    j1 = -vrel * jacDiagABInv;
+
+    if (maxImpulse < j1) {
+        j1 = maxImpulse;
+    }
+    if (j1 < -maxImpulse) {
+        j1 = -maxImpulse;
+    }
+
+    return j1;
+}
+
+var computeImpulseDenominator_r0 = new Vec3();
+var computeImpulseDenominator_c0 = new Vec3();
+var computeImpulseDenominator_vec = new Vec3();
+var computeImpulseDenominator_m = new Vec3();
+function computeImpulseDenominator(body, pos, normal) {
+    var r0 = computeImpulseDenominator_r0;
+    var c0 = computeImpulseDenominator_c0;
+    var vec = computeImpulseDenominator_vec;
+    var m = computeImpulseDenominator_m;
+
+    pos.vsub(body.position, r0);
+    r0.cross(normal, c0);
+    body.invInertiaWorld.vmult(c0, m);
+    m.cross(r0, vec);
+
+    return body.invMass + normal.dot(vec);
+}
+
+
+var resolveSingleBilateral_vel1 = new Vec3();
+var resolveSingleBilateral_vel2 = new Vec3();
+var resolveSingleBilateral_vel = new Vec3();
+//bilateral constraint between two dynamic objects
+function resolveSingleBilateral(body1, pos1, body2, pos2, normal, impulse){
+    var normalLenSqr = normal.norm2();
+    if (normalLenSqr > 1.1){
+        return 0; // no impulse
+    }
+    // var rel_pos1 = new Vec3();
+    // var rel_pos2 = new Vec3();
+    // pos1.vsub(body1.position, rel_pos1);
+    // pos2.vsub(body2.position, rel_pos2);
+
+    var vel1 = resolveSingleBilateral_vel1;
+    var vel2 = resolveSingleBilateral_vel2;
+    var vel = resolveSingleBilateral_vel;
+    body1.getVelocityAtWorldPoint(pos1, vel1);
+    body2.getVelocityAtWorldPoint(pos2, vel2);
+
+    vel1.vsub(vel2, vel);
+
+    var rel_vel = normal.dot(vel);
+
+    var contactDamping = 1;
+    var massTerm = 1 / (body1.invMass + body2.invMass);
+    var impulse = - contactDamping * rel_vel * massTerm;
+
+    return impulse;
+}
+
+var resolveSlipAngleBilateral_vel1 = new Vec3();
+var resolveSlipAngleBilateral_vel2 = new Vec3();
+var resolveSlipAngleBilateral_vel = new Vec3();
+// Special for wheel slip
+function resolveSlipAngleBilateral(body1, pos1, body2, pos2, normal, tangent, wheelInfo){
+    var normalLenSqr = normal.norm2();
+    if (normalLenSqr > 1.1){
+        return 0; // no impulse
+    }
+
+    var vel1 = resolveSlipAngleBilateral_vel1;
+    var vel2 = resolveSlipAngleBilateral_vel2;
+    var vel = resolveSlipAngleBilateral_vel;
+    body1.getVelocityAtWorldPoint(pos1, vel1);
+    body2.getVelocityAtWorldPoint(pos2, vel2);
+    vel1.vsub(vel2, vel);
+
+    var rel_vel_coef = Math.abs(tangent.dot(vel));
+    var rel_vel = normal.dot(vel);
+    if(rel_vel_coef > 1){
+        rel_vel = rel_vel / rel_vel_coef; 
+    }
+    rel_vel = Math.max(-1, Math.min(10 * rel_vel, 1)) // Saturate Slip
+
+    // body1 is chassis so change body1.invMass to wheelsuspensionforce*g(0.1)
+    var virtualMass = wheelInfo.suspensionForce * 0.1;
+    var contactDamping = 1;
+    var massTerm = 1 / (1000 + body2.invMass) + Math.min(body1.mass, virtualMass);
+    var impulse = - contactDamping * rel_vel * massTerm;
+
+    return impulse;
+}
+},{"../math/Quaternion":29,"../math/Vec3":31,"../objects/Body":32,"../vehicle/WheelInfo":55}],55:[function(_dereq_,module,exports){
+var Vec3 = _dereq_('../math/Vec3');
+var Transform = _dereq_('../math/Transform');
+var RaycastResult = _dereq_('../collision/RaycastResult');
+var Utils = _dereq_('../utils/Utils');
+
+module.exports = WheelInfo;
+
+/**
+ * @class WheelInfo
+ * @constructor
+ * @param {Object} [options]
+ *
+ * @param {Vec3} [options.chassisConnectionPointLocal]
+ * @param {Vec3} [options.chassisConnectionPointWorld]
+ * @param {Vec3} [options.directionLocal]
+ * @param {Vec3} [options.directionWorld]
+ * @param {Vec3} [options.axleLocal]
+ * @param {Vec3} [options.axleWorld]
+ * @param {number} [options.suspensionRestLength=1]
+ * @param {number} [options.suspensionMaxLength=2]
+ * @param {number} [options.radius=1]
+ * @param {number} [options.suspensionStiffness=100]
+ * @param {number} [options.dampingCompression=10]
+ * @param {number} [options.dampingRelaxation=10]
+ * @param {number} [options.frictionSlip=1]
+ * @param {number} [options.steering=0]
+ * @param {number} [options.rotation=0]
+ * @param {number} [options.deltaRotation=0]
+ * @param {number} [options.rollInfluence=0.01]
+ * @param {number} [options.maxSuspensionForce]
+ * @param {boolean} [options.isFrontWheel=true]
+ * @param {number} [options.clippedInvContactDotSuspension=1]
+ * @param {number} [options.suspensionRelativeVelocity=0]
+ * @param {number} [options.suspensionForce=0]
+ * @param {number} [options.skidInfo=0]
+ * @param {number} [options.suspensionLength=0]
+ * @param {number} [options.maxSuspensionTravel=1]
+ * @param {boolean} [options.useCustomSlidingRotationalSpeed=false]
+ * @param {number} [options.customSlidingRotationalSpeed=-0.1]
+ */
+function WheelInfo(options){
+    options = Utils.defaults(options, {
+        chassisConnectionPointLocal: new Vec3(),
+        chassisConnectionPointWorld: new Vec3(),
+        directionLocal: new Vec3(),
+        directionWorld: new Vec3(),
+        axleLocal: new Vec3(),
+        axleWorld: new Vec3(),
+        suspensionRestLength: 1,
+        suspensionMaxLength: 2,
+        radius: 1,
+        suspensionStiffness: 100,
+        dampingCompression: 10,
+        dampingRelaxation: 10,
+        frictionSlip: 1,
+        steering: 0,
+        rotation: 0,
+        deltaRotation: 0,
+        rollInfluence: 0.01,
+        maxSuspensionForce: Number.MAX_VALUE,
+        isFrontWheel: true,
+        clippedInvContactDotSuspension: 1,
+        suspensionRelativeVelocity: 0,
+        suspensionForce: 0,
+        skidInfo: 0,
+        suspensionLength: 0,
+        maxSuspensionTravel: 1,
+        useCustomSlidingRotationalSpeed: false,
+        customSlidingRotationalSpeed: -0.1
+    });
+
+    /**
+     * Max travel distance of the suspension, in meters.
+     * @property {number} maxSuspensionTravel
+     */
+    this.maxSuspensionTravel = options.maxSuspensionTravel;
+
+    /**
+     * Speed to apply to the wheel rotation when the wheel is sliding.
+     * @property {number} customSlidingRotationalSpeed
+     */
+    this.customSlidingRotationalSpeed = options.customSlidingRotationalSpeed;
+
+    /**
+     * If the customSlidingRotationalSpeed should be used.
+     * @property {Boolean} useCustomSlidingRotationalSpeed
+     */
+    this.useCustomSlidingRotationalSpeed = options.useCustomSlidingRotationalSpeed;
+
+    /**
+     * @property {Boolean} sliding
+     */
+    this.sliding = false;
+
+    /**
+     * Connection point, defined locally in the chassis body frame.
+     * @property {Vec3} chassisConnectionPointLocal
+     */
+    this.chassisConnectionPointLocal = options.chassisConnectionPointLocal.clone();
+
+    /**
+     * @property {Vec3} chassisConnectionPointWorld
+     */
+    this.chassisConnectionPointWorld = options.chassisConnectionPointWorld.clone();
+
+    /**
+     * @property {Vec3} directionLocal
+     */
+    this.directionLocal = options.directionLocal.clone();
+
+    /**
+     * @property {Vec3} directionWorld
+     */
+    this.directionWorld = options.directionWorld.clone();
+
+    /**
+     * @property {Vec3} axleLocal
+     */
+    this.axleLocal = options.axleLocal.clone();
+
+    /**
+     * @property {Vec3} axleWorld
+     */
+    this.axleWorld = options.axleWorld.clone();
+
+    /**
+     * @property {number} suspensionRestLength
+     */
+    this.suspensionRestLength = options.suspensionRestLength;
+
+    /**
+     * @property {number} suspensionMaxLength
+     */
+    this.suspensionMaxLength = options.suspensionMaxLength;
+
+    /**
+     * @property {number} radius
+     */
+    this.radius = options.radius;
+
+    /**
+     * @property {number} suspensionStiffness
+     */
+    this.suspensionStiffness = options.suspensionStiffness;
+
+    /**
+     * @property {number} dampingCompression
+     */
+    this.dampingCompression = options.dampingCompression;
+
+    /**
+     * @property {number} dampingRelaxation
+     */
+    this.dampingRelaxation = options.dampingRelaxation;
+
+    /**
+     * @property {number} frictionSlip
+     */
+    this.frictionSlip = options.frictionSlip;
+
+    /**
+     * @property {number} steering
+     */
+    this.steering = 0;
+
+    /**
+     * Rotation value, in radians.
+     * @property {number} rotation
+     */
+    this.rotation = 0;
+
+    /**
+     * @property {number} deltaRotation
+     */
+    this.deltaRotation = 0;
+
+    /**
+     * @property {number} rollInfluence
+     */
+    this.rollInfluence = options.rollInfluence;
+
+    /**
+     * @property {number} maxSuspensionForce
+     */
+    this.maxSuspensionForce = options.maxSuspensionForce;
+
+    /**
+     * @property {number} engineForce
+     */
+    this.engineForce = 0;
+
+    /**
+     * @property {number} brake
+     */
+    this.brake = 0;
+
+    /**
+     * @property {number} isFrontWheel
+     */
+    this.isFrontWheel = options.isFrontWheel;
+
+    /**
+     * @property {number} clippedInvContactDotSuspension
+     */
+    this.clippedInvContactDotSuspension = 1;
+
+    /**
+     * @property {number} suspensionRelativeVelocity
+     */
+    this.suspensionRelativeVelocity = 0;
+
+    /**
+     * @property {number} suspensionForce
+     */
+    this.suspensionForce = 0;
+
+    /**
+     * @property {number} skidInfo
+     */
+    this.skidInfo = 0;
+
+    /**
+     * @property {number} suspensionLength
+     */
+    this.suspensionLength = 0;
+
+    /**
+     * @property {number} sideImpulse
+     */
+    this.sideImpulse = 0;
+
+    /**
+     * @property {number} forwardImpulse
+     */
+    this.forwardImpulse = 0;
+
+    /**
+     * The result from raycasting
+     * @property {RaycastResult} raycastResult
+     */
+    this.raycastResult = new RaycastResult();
+
+    /**
+     * Wheel world transform
+     * @property {Transform} worldTransform
+     */
+    this.worldTransform = new Transform();
+
+    /**
+     * @property {boolean} isInContact
+     */
+    this.isInContact = false;
+}
+
+var chassis_velocity_at_contactPoint = new Vec3();
+var relpos = new Vec3();
+var chassis_velocity_at_contactPoint = new Vec3();
+WheelInfo.prototype.updateWheel = function(chassis){
+    var raycastResult = this.raycastResult;
+
+    if (this.isInContact){
+        var project= raycastResult.hitNormalWorld.dot(raycastResult.directionWorld);
+        raycastResult.hitPointWorld.vsub(chassis.position, relpos);
+        chassis.getVelocityAtWorldPoint(relpos, chassis_velocity_at_contactPoint);
+        var projVel = raycastResult.hitNormalWorld.dot( chassis_velocity_at_contactPoint );
+        if (project >= -0.1) {
+            this.suspensionRelativeVelocity = 0.0;
+            this.clippedInvContactDotSuspension = 1.0 / 0.1;
+        } else {
+            var inv = -1 / project;
+            this.suspensionRelativeVelocity = projVel * inv;
+            this.clippedInvContactDotSuspension = inv;
+        }
+
+    } else {
+        // Not in contact : position wheel in a nice (rest length) position
+        raycastResult.suspensionLength = this.suspensionRestLength;
+        this.suspensionRelativeVelocity = 0.0;
+        raycastResult.directionWorld.scale(-1, raycastResult.hitNormalWorld);
+        this.clippedInvContactDotSuspension = 1.0;
+    }
+};
+},{"../collision/RaycastResult":11,"../math/Transform":30,"../math/Vec3":31,"../utils/Utils":52}],56:[function(_dereq_,module,exports){
 module.exports = Narrowphase;
 
 var AABB = _dereq_('../collision/AABB');
@@ -13544,7 +13538,7 @@ Narrowphase.prototype.sphereHeightfield = function (
     }
 };
 
-},{"../collision/AABB":3,"../collision/Ray":10,"../equations/ContactEquation":20,"../equations/FrictionEquation":22,"../math/Quaternion":29,"../math/Transform":30,"../math/Vec3":31,"../objects/Body":32,"../shapes/ConvexPolyhedron":39,"../shapes/Shape":44,"../solver/Solver":48,"../utils/Vec3Pool":55}],57:[function(_dereq_,module,exports){
+},{"../collision/AABB":3,"../collision/Ray":10,"../equations/ContactEquation":20,"../equations/FrictionEquation":22,"../math/Quaternion":29,"../math/Transform":30,"../math/Vec3":31,"../objects/Body":32,"../shapes/ConvexPolyhedron":37,"../shapes/Shape":42,"../solver/Solver":46,"../utils/Vec3Pool":53}],57:[function(_dereq_,module,exports){
 /* global performance */
 
 module.exports = World;
@@ -14578,6 +14572,6 @@ World.prototype.clearForces = function(){
     }
 };
 
-},{"../collision/AABB":3,"../collision/ArrayCollisionMatrix":4,"../collision/NaiveBroadphase":7,"../collision/OverlapKeeper":9,"../collision/Ray":10,"../collision/RaycastResult":11,"../equations/ContactEquation":20,"../equations/FrictionEquation":22,"../material/ContactMaterial":25,"../material/Material":26,"../math/Quaternion":29,"../math/Vec3":31,"../objects/Body":32,"../shapes/Shape":44,"../solver/GSSolver":47,"../utils/EventTarget":50,"../utils/TupleDictionary":53,"./Narrowphase":56}]},{},[2])
+},{"../collision/AABB":3,"../collision/ArrayCollisionMatrix":4,"../collision/NaiveBroadphase":7,"../collision/OverlapKeeper":9,"../collision/Ray":10,"../collision/RaycastResult":11,"../equations/ContactEquation":20,"../equations/FrictionEquation":22,"../material/ContactMaterial":25,"../material/Material":26,"../math/Quaternion":29,"../math/Vec3":31,"../objects/Body":32,"../shapes/Shape":42,"../solver/GSSolver":45,"../utils/EventTarget":48,"../utils/TupleDictionary":51,"./Narrowphase":56}]},{},[2])
 (2)
 });

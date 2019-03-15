@@ -183,12 +183,12 @@ CANNON.Demo = function(options){
         case "solid":
             that.currentMaterial = solidMaterial;
             light.intensity = 1;
-            hemiLight.intensity = 0.3;
+            ambient.intensity = 0.3;
             break;
         case "wireframe":
             that.currentMaterial = wireframeMaterial;
             light.intensity = 0;
-            hemiLight.intensity = 1;
+            ambient.intensity = 1;
             break;
         }
 
@@ -469,9 +469,9 @@ CANNON.Demo = function(options){
         scene.fog = new THREE.Fog( 0, 5, FAR );
 
         // LIGHTS
-        hemiLight = new THREE.HemisphereLight( 0xffffff, 0x222222, 0.3 );
-        hemiLight.position.set( 0, 0, 10 );
-        scene.add( hemiLight );
+        ambient = new THREE.HemisphereLight( 0xffffff, 0x222222, 0.3 );
+        ambient.position.set( 0, 0, 10 );
+        scene.add( ambient );
 
         light = new THREE.DirectionalLight( 0xffffff, 1 );
         light.position.set( 30, 30, 40 );

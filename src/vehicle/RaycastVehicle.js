@@ -1,9 +1,7 @@
-var Body = require('./Body');
+var Body = require('../objects/Body');
 var Vec3 = require('../math/Vec3');
 var Quaternion = require('../math/Quaternion');
-var RaycastResult = require('../collision/RaycastResult');
-var Ray = require('../collision/Ray');
-var WheelInfo = require('../objects/WheelInfo');
+var WheelInfo = require('../vehicle/WheelInfo');
 
 module.exports = RaycastVehicle;
 
@@ -69,7 +67,6 @@ var tmpVec3 = new Vec3();
 var tmpVec4 = new Vec3();
 var tmpVec5 = new Vec3();
 var tmpVec6 = new Vec3();
-var tmpRay = new Ray();
 
 /**
  * Add a wheel. For information about the options, see WheelInfo.
@@ -96,8 +93,6 @@ RaycastVehicle.prototype.setSteeringValue = function(value, wheelIndex){
     var wheel = this.wheelInfos[wheelIndex];
     wheel.steering = value;
 };
-
-var torque = new Vec3();
 
 /**
  * Set the wheel force to apply on one of the wheels each time step
@@ -305,8 +300,6 @@ RaycastVehicle.prototype.castRay = function(wheel) {
     var source = wheel.chassisConnectionPointWorld;
     source.vadd(rayvector, target);
     var raycastResult = wheel.raycastResult;
-
-    var param = 0;
 
     raycastResult.reset();
     // Turn off ray collision with the chassis temporarily
@@ -713,14 +706,15 @@ function resolveSlipAngleBilateral(body1, pos1, body2, pos2, normal, tangent, wh
 
     var rel_vel_coef = Math.abs(tangent.dot(vel));
     var rel_vel = normal.dot(vel);
-    if(rel_vel_coef > 1.0){
+    if(rel_vel_coef > 1){
         rel_vel = rel_vel / rel_vel_coef; 
     }
+    rel_vel = Math.max(-1, Math.min(10 * rel_vel, 1)) // Saturate Slip
 
     // body1 is chassis so change body1.invMass to wheelsuspensionforce*g(0.1)
     var virtualMass = wheelInfo.suspensionForce * 0.1;
     var contactDamping = 1;
-    var massTerm = 1 / (1 + body2.invMass) + Math.min(body1.mass, virtualMass);
+    var massTerm = 1 / (1000 + body2.invMass) + Math.min(body1.mass, virtualMass);
     var impulse = - contactDamping * rel_vel * massTerm;
 
     return impulse;

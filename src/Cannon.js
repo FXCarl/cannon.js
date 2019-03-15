@@ -33,7 +33,7 @@ module.exports = {
     PointToPointConstraint :        require('./constraints/PointToPointConstraint'),
     Quaternion :                    require('./math/Quaternion'),
     Ray :                           require('./collision/Ray'),
-    RaycastVehicle :                require('./objects/RaycastVehicle'),
+    RaycastVehicle :                require('./vehicle/RaycastVehicle'),
     RaycastResult :                 require('./collision/RaycastResult'),
     RigidVehicle :                  require('./objects/RigidVehicle'),
     RotationalEquation :            require('./equations/RotationalEquation'),

@@ -3,7 +3,7 @@ var Quaternion = require("../src/math/Quaternion");
 var Box = require('../src/shapes/Box');
 var Plane = require('../src/shapes/Plane');
 var Body = require('../src/objects/Body');
-var RaycastVehicle = require('../src/objects/RaycastVehicle');
+var RaycastVehicle = require('../src/vehicle/RaycastVehicle');
 var World = require('../src/world/World');
 
 module.exports = {

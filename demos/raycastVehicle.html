@@ -18,18 +18,22 @@
     <script>
 
         var demo = new CANNON.Demo();
-        var mass = 1500;
+        demo.settings.stepFrequency = 120;
+
         var vehicle;
+        var vehicleDiag = {
+            kph : 0,
+            deltav : 0
+        }
 
         demo.addScene("car",function(){
             var world = demo.getWorld();
             world.broadphase = new CANNON.SAPBroadphase(world);
             world.gravity.set(0, 0, -10);
-            world.defaultContactMaterial.friction = 0;
-            demo.settings.stepFrequency = 120;
+            world.defaultContactMaterial.friction = 0.5;
 
-            var groundMaterial = new CANNON.Material("groundMaterial");
-            var wheelMaterial = new CANNON.Material("wheelMaterial");
+            var groundMaterial = new CANNON.Material('groundMaterial');
+            var wheelMaterial = new CANNON.Material('wheelMaterial');
             var wheelGroundContactMaterial = window.wheelGroundContactMaterial = new CANNON.ContactMaterial(wheelMaterial, groundMaterial, {
                 friction: 1.0,
                 restitution: 0,
@@ -41,7 +45,7 @@
 
             var chassisShape;
             chassisShape = new CANNON.Box(new CANNON.Vec3(2.3, 0.8, 0.25));
-            var chassisBody = new CANNON.Body({ mass: mass });
+            var chassisBody = new CANNON.Body({ mass: 1500 });
             chassisBody.addShape(chassisShape);
             chassisBody.position.set(0, 0, 4);
             chassisBody.angularVelocity.set(0, 0, 0.5);
@@ -50,7 +54,7 @@
             var options = {
                 radius: 0.35,
                 directionLocal: new CANNON.Vec3(0, 0, -1),
-                suspensionStiffness: 300,
+                suspensionStiffness: 200,
                 suspensionRestLength: 0.15,
                 frictionSlip: 1,
                 dampingRelaxation: 12.3,
@@ -121,7 +125,7 @@
                     var height = Math.cos(i / sizeX * Math.PI * 5) * Math.cos(j/sizeY * Math.PI * 5) * 2 + 2;
                     if(i===0 || i === sizeX-1 || j===0 || j === sizeY-1)
                         height = 10;
-                    matrix[i].push(height * 0.5); // Temp Set to zero offset
+                    matrix[i].push(height * 0); // Temp Set to zero offset
                 }
             }
 
@@ -137,6 +141,26 @@
 
         demo.start();
 
+        var gui = new dat.GUI();
+        gui.add(vehicleDiag, 'kph').listen();
+        gui.add(vehicleDiag, 'deltav', -10, 10).listen();
+
+        window.requestAnimationFrame( update );
+        var updatetime;
+        function update(timestamp){
+            requestAnimationFrame( update );
+            if (!updatetime) updatetime = timestamp;
+            var progress = (timestamp - updatetime) / 1000;
+            updatetime = timestamp;
+            if(isNaN(vehicleDiag.deltav)){
+                vehicleDiag.deltav = 0
+            }
+            vehicleDiag.deltav = 0.5 * (vehicleDiag.deltav + (vehicle.currentVehicleSpeedKmHour - vehicleDiag.kph) / progress * 0.27778); // delta kph to delta m/s
+            vehicleDiag.kph = vehicle.currentVehicleSpeedKmHour;
+        }
+
+
+        // Drive
         document.onkeydown = handler;
         document.onkeyup = handler;
 
@@ -167,7 +191,7 @@
                 vehicle.applyEngineForce(up ? 0 : maxForce, 1);
                 break;
 
-            case 66: // b
+            case 66: // b - braking to standstill
                 vehicle.setBrake(brakeForce, 0);
                 vehicle.setBrake(brakeForce, 1);
                 vehicle.setBrake(brakeForce, 2);
