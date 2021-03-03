@@ -1,106 +1,129 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>Canvas interpolation example - Cannon.js</title>
-    <meta charset="utf-8">
-    <script src="../build/cannon.js"></script>
+    <meta charset="utf-8" />
+    <title>cannon.js - Canvas interpolation example</title>
+    <link rel="stylesheet" href="css/style.css" type="text/css" />
+    <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
+    <style>
+      .page-title {
+        color: black;
+      }
+      .page-title span {
+        color: #2f56e7;
+      }
+    </style>
+    <script type="module">
+      import { addTitle, addSourceButton } from './js/dom-utils.js'
+
+      addTitle()
+      addSourceButton()
+    </script>
   </head>
   <body>
+    <script type="module">
+      import * as CANNON from '../dist/cannon-es.js'
 
-    <!-- The canvas, where we draw stuff -->
-    <canvas width="500" height="500" id="myCanvas"></canvas>
+      /**
+       * Example of interpolatedPosition and interpolatedQuaternion
+       * using a canvas for simplicity
+       */
 
-    <script>
-      var w, h, canvas, ctx, world, sphereBody;
+      let ctx
+      let world
+      let sphereBody
 
-      init();
-      animate();
+      const radius = 1
 
-      function init(){
+      let lastCallTime = getTime()
 
+      init()
+      animate()
+
+      function init() {
         // Init canvas
-        canvas = document.getElementById("myCanvas");
-        w = canvas.width;
-        h = canvas.height;
-        ctx = canvas.getContext("2d");
-        ctx.lineWidth = 0.05;
+        const canvas = document.createElement('canvas')
+        canvas.width = window.innerWidth
+        canvas.height = window.innerHeight
+        document.body.appendChild(canvas)
+
+        ctx = canvas.getContext('2d')
+        ctx.lineWidth = 0.05
+
+        window.addEventListener('resize', () => {
+          canvas.width = window.innerWidth
+          canvas.height = window.innerHeight
+          ctx.lineWidth = 0.05
+        })
 
         // Init world
-        world = new CANNON.World({ gravity:new CANNON.Vec3() });
+        world = new CANNON.World()
 
-        // Add a circle
-        sphereShape = new CANNON.Sphere(1);
-        var velo = [0,0],
-            pos  = [-3,0];
-        sphereBody = new CANNON.Body({ mass:1, position:new CANNON.Vec3(-3,0,0) });
-        sphereBody.damping = 0;
-        sphereBody.addShape(sphereShape);
-        world.addBody(sphereBody);
+        // Add a circle (sphere) in the physics world
+        const sphereShape = new CANNON.Sphere(radius)
+        sphereBody = new CANNON.Body({
+          mass: 1,
+          position: new CANNON.Vec3(1, -2.5, 0),
+        })
+        sphereBody.addShape(sphereShape)
+        world.addBody(sphereBody)
       }
 
-      function drawCircles(ctx,sphereBody){
-        ctx.beginPath();
-        var radius = sphereShape.radius;
-
+      function drawCircles() {
         // Draw the circle at the interpolated position
-        ctx.arc(sphereBody.interpolatedPosition.x,
-                sphereBody.interpolatedPosition.y,
-                radius,0,2*Math.PI);
-        ctx.stroke();
-        ctx.beginPath();
+        ctx.beginPath()
+        ctx.arc(sphereBody.interpolatedPosition.x, sphereBody.interpolatedPosition.y, radius, 0, Math.PI * 2)
+        ctx.stroke()
 
         // Draw the circle at the fixed step position
-        ctx.arc(sphereBody.position.x,
-                sphereBody.position.y,
-                radius,0,2*Math.PI);
-        ctx.stroke();
+        ctx.beginPath()
+        ctx.arc(sphereBody.position.x, sphereBody.position.y, radius, 0, Math.PI * 2)
+        ctx.stroke()
       }
 
-      function render(ctx,sphereBody){
-        ctx.clearRect(0,0,w,h);
-        ctx.save();
-        ctx.translate(w/2, h/2);
-        ctx.scale(50, -50);
-        drawCircles(ctx,sphereBody);
-        ctx.restore();
+      function render() {
+        ctx.clearRect(0, 0, window.innerWidth, window.innerHeight)
+        ctx.save()
+        ctx.translate(window.innerWidth / 2, window.innerHeight / 2)
+        ctx.scale(50, 50)
+        drawCircles()
+        ctx.restore()
       }
-
-      var lastCallTime = time();
 
       // Animation loop
-      function animate(t){
-        t = t || 0;
-        requestAnimationFrame(animate);
+      function animate() {
+        requestAnimationFrame(animate)
 
-        sphereBody.velocity.x = 2*Math.cos(1 * t / 1000 + 3/2*Math.PI);
-        sphereBody.velocity.y = 2*Math.sin(1 * t / 1000 + 3/2*Math.PI);
+        const time = getTime()
 
         // Compute time since last time we called the .step() method
-        var timeSinceLastCall = time()-lastCallTime;
-        lastCallTime = time();
+        const timeSinceLastCall = time - lastCallTime
+        lastCallTime = time
+
+        sphereBody.velocity.x = Math.cos(time) * 3
+        sphereBody.velocity.y = Math.sin(time) * 3
 
         // Fixed time step to use for physics. We use a huge timestep of 0.5 to see what's going on.
         // NOTE: For most games, fixedTimeStep=1/60 is a good choice.
-        var fixedTimeStep=0.5; // seconds
+        const fixedTimeStep = 0.5 // seconds
 
         // Max number of fixed physics timesteps to do in one .step(). We choose a large number to see what is going on.
         // NOTE: for most games, maxSubSteps=3 is probably a good choice.
-        var maxSubSteps=10;
+        const maxSubSteps = 10
 
         // Now step the world.
         // This will do integration at a fixed time step, but compute interpolated positions
         // which are stored in body.interpolatedPosition.
-        world.step(fixedTimeStep,timeSinceLastCall,maxSubSteps);
+        world.step(fixedTimeStep, timeSinceLastCall, maxSubSteps)
 
         // Render both interpolated and fixed-step positions
-        render(ctx,sphereBody);
+        render(ctx, sphereBody)
       }
 
       // Get current time, in seconds.
-      function time(){
-        return new Date().getTime() / 1000;
+      function getTime() {
+        return performance.now() / 1000
       }
     </script>
-
   </body>
 </html>
